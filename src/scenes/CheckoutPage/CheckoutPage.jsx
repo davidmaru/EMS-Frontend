@@ -58,7 +58,7 @@ const CheckoutPage = () => {
 
   return (
     <Container maxWidth="md">
-      <Paper className={classes.paper} sx={{ backgroundColor:"darkgrey"}}>
+      <Paper className={classes.paper} sx={{ backgroundColor:"initial"}}>
         <Typography variant="h4" className={classes.title}>
           Checkout
         </Typography>

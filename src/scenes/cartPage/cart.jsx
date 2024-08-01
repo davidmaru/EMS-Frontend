@@ -9,8 +9,8 @@ import RemoveIcon from '@mui/icons-material/Remove';
 
 function Cart() {
   const [cartItems, setCartItems] = useState([
-    { id: 1, name: 'Ticket Type', price: 50.00, quantity: 0 },
-    { id: 2, name: 'Ticket Type VIP', price: 100.00, quantity: 0 }
+    { id: 1, name: 'Ticket Type', price: 5000.00, quantity: 0 },
+    { id: 2, name: 'Ticket Type VIP', price: 1000.00, quantity: 0 }
   ]);
   const [coupon, setCoupon] = useState('');
   const [cartTotal, setCartTotal] = useState(0.00);
@@ -43,7 +43,7 @@ function Cart() {
 
   return (
     <Container>
-      <Paper elevation={3} sx={{ p: 4 , backgroundColor:"darkgrey"}}>
+      <Paper elevation={3} sx={{ p: 4 , backgroundColor:"initial"}}>
         <Typography variant="h4" gutterBottom>Cart Page</Typography>
         <Grid container spacing={2}>
           {cartItems.map(item => (
@@ -55,7 +55,7 @@ function Cart() {
                       <Typography variant="body1">{item.name}</Typography>
                     </Grid>
                     <Grid item xs={2}>
-                      <Typography variant="body1">${item.price.toFixed(2)}</Typography>
+                      <Typography variant="body1">ksh{item.price.toFixed(2)}</Typography>
                     </Grid>
                     <Grid item xs={2}>
                       <Typography variant="body1">Qty: {item.quantity}</Typography>
@@ -97,9 +97,9 @@ function Cart() {
         <Divider sx={{ my: 4 }} />
         <Box mt={4}>
           <Typography variant="h6">Cart Totals</Typography>
-          <Typography>Cart Total: ${cartTotal.toFixed(2)}</Typography>
-          <Typography>Tax: ${tax.toFixed(2)}</Typography>
-          <Typography>Sub Total: ${(cartTotal + tax).toFixed(2)}</Typography>
+          <Typography>Cart Total: KSH {cartTotal.toFixed(2)}</Typography>
+          <Typography>Tax: KSH {tax.toFixed(2)}</Typography>
+          <Typography>Sub Total: KSH {(cartTotal + tax).toFixed(2)}</Typography>
         </Box>
         <Box mt={4}>
           <Link to="/CheckoutPage" style={{ textDecoration: 'none' }}>
