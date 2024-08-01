@@ -11,6 +11,7 @@ import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOu
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import HomeIcon from "@mui/icons-material/Home";
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined'
+import FormatListBulletedOutlinedIcon from '@mui/icons-material/FormatListBulletedOutlined';
 
 const organizers = [
   { id: 1, name: "Organizer 1", contact: "contact1@example.com", bio: "Bio for Organizer 1" },
@@ -69,6 +70,13 @@ const OrganizersPage = () => {
             <AddCircleOutlineOutlinedIcon sx={{ color: colors.grey[100] }} />
           </IconButton>
           </Tooltip>
+          <Link to="/Eventpage">
+            <Tooltip title="Event List">
+              <IconButton sx={{ ml: 1 }}>
+                <FormatListBulletedOutlinedIcon sx={{ color: colors.grey[100] }} />
+              </IconButton>
+            </Tooltip>
+          </Link>
           <Tooltip title="Profile">
           <IconButton component={Link} to="/authpage" sx={{ ml: 1 }}>
             <PersonOutlinedIcon sx={{ color: colors.grey[100] }} />
