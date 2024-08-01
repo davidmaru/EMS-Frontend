@@ -12,27 +12,15 @@ import LocalOfferIcon from "@mui/icons-material/LocalOffer"; // New category ico
 import EventImage1 from "../assets/EventImage1.jpg";
 import EventImage2 from "../assets/EventImage2.jpg";
 import EventImage3 from "../assets/EventImage3.jpg";
-import Dining from "../assets/Dining.jpg";
-import Glasses from "../assets/Glasses.jpg";
-import Wine from "../assets/Wine.jpg";
-import Group from "../assets/Group.jpg";
-import Blue from "../assets/Blue.jpg";
-import WILLIAM from "../assets/WILLIAM.jpg";
 import { Link } from 'react-router-dom';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
+// Your updated images, categories, and events data
 const images = [
   { src: EventImage1, description: "Event 1 Description" },
   { src: EventImage2, description: "Event 2 Description" },
-  { src: EventImage3, description: "Event 3 Description" },
-  { src: Dining, description: "Event 4 Description" },
-  { src: Glasses, description: "Event 5 Description" },
-  { src: Wine, description: "Event 6 Description" },
-  { src: Group, description: "Event 7 Description" },
-  { src: Blue, description: "Event 8 Description" },
-  { src: WILLIAM, description: "UDA CELEBRATIONS" }
-
+  { src: EventImage3, description: "Event 3 Description" }
 ];
 const categories = [
   { name: "Music", icon: <MusicNoteSharpIcon /> },
@@ -41,24 +29,14 @@ const categories = [
   { name: "Technology", icon: <ComputerIcon /> },
   { name: "Education", icon: <SchoolIcon /> },
   { name: "Health", icon: <HealthAndSafetyIcon /> },
-  { name: "Comedy", icon: <TheaterComedyIcon /> }, 
-  { name: "Movies", icon: <MovieIcon /> }, 
-  { name: "Deals", icon: <LocalOfferIcon /> },
+  { name: "Comedy", icon: <TheaterComedyIcon /> }, // New category
+  { name: "Movies", icon: <MovieIcon /> }, // New category
+  { name: "Deals", icon: <LocalOfferIcon /> }, // New category
 ];
 const events = [
   { id: 1, name: "Event 1", date: "2024-08-01", description: "Description for Event 1", image: EventImage1 },
   { id: 2, name: "Event 2", date: "2024-08-05", description: "Description for Event 2", image: EventImage2 },
   { id: 3, name: "Event 3", date: "2024-08-10", description: "Description for Event 3", image: EventImage3 },
-  { id: 4, name: "Event 4", date: "2024-08-16", description: "Description for Event 4", image: Dining },
-  { id: 5, name: "Event 5", date: "2024-08-30", description: "Description for Event 5", image: Group },
-  { id: 6, name: "Event 6", date: "2024-08-20", description: "Description for Event 6", image: Wine },
-  { id: 7, name: "Event 7", date: "2024-08-17", description: "Description for Event 7", image: Glasses },
-  { id: 7, name: "Event 8", date: "2024-08-17", description: "Description for Event 8", image: Blue },
-  { id: 8, name: "Event 8", date: "2024-08-29", description: " UDA CELEBRATIONS", image: WILLIAM },
-
-
-
-
 ];
 
 const HomePage = () => {
@@ -101,7 +79,7 @@ const HomePage = () => {
                   justifyContent: 'space-between',
                   alignItems: 'center',
                   boxSizing: 'border-box',
-                  height: '80px', 
+                  height: '60px', // Adjust height to be more compact
                 }}
               >
                 <Typography variant="subtitle2" sx={{ maxWidth: '70%', fontSize: '0.9rem' }}>

@@ -1,0 +1,28 @@
+{  
+    "title": "Frontend Developer",
+    "this": "This is a simple example of using JSON in a React app.",
+
+
+    "events": [
+        {
+          "Name": "hg haiah",
+          "location": "Item ",
+          "date": 10.99,
+          "deccription": "fffii"
+        },
+        {
+            "Name": "ddddd",
+          "location": "HHHHH",
+          "date": 10.99,
+          "deccription": "fffii"
+         
+        },
+        {
+        "Name": "buru",
+          "location": "Item ",
+          "date": 10.99,
+          "deccription": "fffii"
+        }
+      ]
+ 
+}

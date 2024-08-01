@@ -61,7 +61,7 @@ export const tokens = (mode) => ({
           900: "#1565c0",
         },
         topbar: {
-          background: "#000080", // Dark navy background for dark mode
+          background: "#004d40", // Dark teal background
           color: "#ffffff", // White text
         },
       }
@@ -122,7 +122,7 @@ export const tokens = (mode) => ({
           900: "#e3f2fd",
         },
         topbar: {
-          background: "#000080", // Dark navy background for light mode
+          background: "#42a5f5", // Ocean blue background
           color: "#ffffff", // White text
         },
       }),
@@ -145,10 +145,10 @@ export const themeSettings = (mode) => {
             neutral: {
               dark: colors.grey[700],
               main: colors.grey[500],
-              light: colors.grey[600],
+              light: colors.grey[100],
             },
             background: {
-              default: colors.blueAccent[900],
+              default: colors.primary[500],
             },
             topbar: {
               background: colors.topbar.background,
@@ -165,10 +165,10 @@ export const themeSettings = (mode) => {
             neutral: {
               dark: colors.grey[700],
               main: colors.grey[500],
-              light: colors.grey[500],
+              light: colors.grey[100],
             },
             background: {
-              default: colors.blueAccent[900],
+              default: colors.primary[100],
             },
             topbar: {
               background: colors.topbar.background,
