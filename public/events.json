@@ -1,0 +1,55 @@
+[
+    {
+      "Id": 1,
+      "LocationVenue": "Paris",
+      "Description": "A fun outdoor concert",
+      "Status": "Active",
+      "Price": 50,
+      "Organizer": "MusicFest Inc.",
+      "EventName": "Summer Jam",
+      "EventType": "Concert",
+      "Schedule": "Saturday",
+      "StartDateTime": "2024-08-01T18:00:00",
+      "Duration": "3 hours"
+    },
+    {
+      "Id": 2,
+      "LocationVenue": "Jeri",
+      "Description": "A business networking event",
+      "Status": "Active",
+      "Price": 20,
+      "Organizer": "Manuh",
+      "EventName": "Networking Night",
+      "EventType": "Business",
+      "Schedule": "Friday",
+      "StartDateTime": "2024-08-02T19:00:00",
+      "Duration": "2 hours"
+    },
+    {
+        "Id": 3,
+        "LocationVenue": "Salem",
+        "Description": "A business networking event",
+        "Status": "Active",
+        "Price": 20,
+        "Organizer": "Manuh",
+        "EventName": "Networking Night",
+        "EventType": "Business",
+        "Schedule": "Friday",
+        "StartDateTime": "2024-08-02T19:00:00",
+        "Duration": "2 hours"
+      },
+      {
+        "Id": 4,
+        "LocationVenue": "Jeri",
+        "Description": "A business networking event",
+        "Status": "Active",
+        "Price": 20,
+        "Organizer": "Manuh",
+        "EventName": "Networking Night",
+        "EventType": "Business",
+        "Schedule": "Friday",
+        "StartDateTime": "2024-08-02T19:00:00",
+        "Duration": "2 hours"
+      }
+  ]
+  

@@ -14,6 +14,9 @@ import CheckoutPage from './scenes/CheckoutPage/CheckoutPage';
 import Cart from './scenes/cartPage/cart';
 import AddEventPage from './scenes/OrganizersPage/AddEvent';
 import Admin from './scenes/Admin/Admin';
+import  Eventpage from './scenes/Eventpage/event';
+import Eventlist from './scenes/Eventlist/eventlist';
+
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -35,6 +38,8 @@ function App() {
               <Route path="/cartpage" element={<Cart/>}/>
               <Route path="/AddEventPage" element={<AddEventPage/>}/>
               <Route path="/Admin" element={<Admin/>}/>
+              <Route path="/Eventpage" element= {<Eventpage/>}/>
+              <Route path="/Eventlist" element= {<Eventlist/>}/>
               </Routes>
               </main>
         </div>

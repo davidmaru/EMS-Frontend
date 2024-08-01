@@ -86,9 +86,11 @@ const Topbar = () => {
         <IconButton component={Link} to="/OrganizersPage" sx={{ '&:hover': { color: colors.primary[100] }, ml: 2 }}>
           <Typography color={colors.grey[100]}>Manage Events</Typography>
         </IconButton>
-        <IconButton sx={{ '&:hover': { color: colors.primary[100] }, ml: 2 }}>
-          <Typography color={colors.grey[100]}>Find Events</Typography>
-        </IconButton>
+        <Link to="/Eventlist">
+          <IconButton sx={{ '&:hover': { color: colors.primary[100] }, ml: 2 }}>
+            <Typography color={colors.grey[100]}>Find Events</Typography>
+          </IconButton>
+          </Link>
       </Box>
 
       {/* PROFILE ICON */}
