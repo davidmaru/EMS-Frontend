@@ -1,0 +1,135 @@
+/* App.css */
+
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background-color: #0f172a;
+    min-height: 100vh;
+    color: #cbd5e1;
+  }
+  
+  .app {
+    display: flex;
+  }
+  
+  .content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #1e293b;
+    padding: 10px 20px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .topbar h4 {
+    margin: 0;
+    color: #f8fafc;
+  }
+  
+  .topbar .iconButton {
+    color: #94a3b8;
+  }
+  
+  .drawer {
+    width: 240px;
+    flex-shrink: 0;
+  }
+  
+  .drawerPaper {
+    width: 240px;
+    background-color: #1e293b;
+    color: #cbd5e1;
+    border-right: none;
+    padding-top: 64px;
+  }
+  
+  .drawer .listItem {
+    padding: 10px 20px;
+  }
+  
+  .drawer .listItem:hover {
+    background-color: #334155;
+  }
+  
+  .drawer .listItemText {
+    font-weight: bold;
+  }
+  
+  .mainContent {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background-color: #0f172a;
+  }
+  
+  .tabs {
+    border-bottom: 1px solid #334155;
+  }
+  
+  .tab {
+    color: #94a3b8;
+  }
+  
+  .tabSelected {
+    color: #f8fafc;
+  }
+  
+  .section {
+    background-color: #1e293b;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .section h6 {
+    margin: 0 0 20px 0;
+    color: #f8fafc;
+  }
+  
+  .table {
+    width: 100%;
+  }
+  
+  .tableHead {
+    background-color: #1e293b;
+  }
+  
+  .tableHeadCell {
+    color: #94a3b8;
+    font-weight: bold;
+  }
+  
+  .tableBodyCell {
+    color: #cbd5e1;
+  }
+  
+  .tableRow {
+    border-bottom: 1px solid #334155;
+  }
+  
+  .tableRow:hover {
+    background-color: #334155;
+  }
+  
+  .iconButton {
+    color: #94a3b8;
+  }
+  
+  .iconButton:hover {
+    color: #f8fafc;
+  }
+  
+#root {
+    min-height: 100vh;
+  }
+  
+  .MuiPaper-root {
+    background-color: #ffffff; /* Ensure cards have a solid background color */
+  }
