@@ -16,8 +16,12 @@ import AddEventPage from './scenes/OrganizersPage/AddEvent';
 import Admin from './scenes/Admin/Admin';
 import  Eventpage from './scenes/Eventpage/event';
 import Eventlist from './scenes/Eventlist/eventlist';
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 
-
+const client = new ApolloClient({
+  uri: "http://localhost:5081/graphql/",
+  cache: new InMemoryCache()
+});
 function App() {
   const [theme, colorMode] = useMode();
   const Location = useLocation();
@@ -27,6 +31,7 @@ function App() {
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
+        <ApolloProvider client={client}>
         <div className="app">
           <main className="content">
             {!hideTopbar && <Topbar/>}
@@ -43,6 +48,7 @@ function App() {
               </Routes>
               </main>
         </div>
+        </ApolloProvider>
       </ThemeProvider>
     </ColorModeContext.Provider>
   );

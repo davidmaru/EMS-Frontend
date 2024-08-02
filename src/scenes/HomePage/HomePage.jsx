@@ -53,8 +53,8 @@ const events = [
   { id: 5, name: "Event 5", date: "2024-08-30", description: "Description for Event 5", image: Group },
   { id: 6, name: "Event 6", date: "2024-08-20", description: "Description for Event 6", image: Wine },
   { id: 7, name: "Event 7", date: "2024-08-17", description: "Description for Event 7", image: Glasses },
-  { id: 7, name: "Event 8", date: "2024-08-17", description: "Description for Event 8", image: Blue },
-  { id: 8, name: "Event 8", date: "2024-08-29", description: " UDA CELEBRATIONS", image: WILLIAM },
+  { id: 8, name: "Event 8", date: "2024-08-17", description: "Description for Event 8", image: Blue },
+  { id: 9, name: "Event 8", date: "2024-08-29", description: " UDA CELEBRATIONS", image: WILLIAM },
 
 
 
