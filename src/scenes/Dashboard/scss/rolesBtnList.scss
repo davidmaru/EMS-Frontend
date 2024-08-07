@@ -1,0 +1,36 @@
+.roles-btn-list {
+    padding-block: 0.5em;
+    display: flex;
+    gap: 1rem;
+    padding-left: 1rem;
+
+    .btn {
+        background-color: white;
+        padding: 0.5em 1em;
+        font-size: 16px;
+        border-radius: 0.5em;
+        outline: none;
+        border: 1px solid #dcdcdc; // Subtle border color
+        transition: transform 0.3s, background-color 0.3s;
+        text-transform: capitalize; // Capitalize text
+        font-weight: 500; // Slightly bolder text
+
+        // Default button state
+        color: #333; // Dark text color
+        border-color: #dcdcdc; // Match border color with text
+
+        // Hover state
+        &:hover {
+            cursor: pointer;
+            transform: scale(1.03);
+            background-color: #f5f5f5; // Light grey background on hover
+        }
+
+        // Active state
+        &.active {
+            background-color: #1976d2; // Primary color for active state
+            color: white; // White text color
+            border-color: #1976d2; // Match border color with background
+        }
+    }
+}

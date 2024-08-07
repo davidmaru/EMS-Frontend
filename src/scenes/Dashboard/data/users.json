@@ -1,0 +1,103 @@
+{
+    "users": [
+        {
+            "id": 99935,
+            "userName": "Ralph Greenholt",
+            "userEmail": "herese@example.com",
+            "role": {
+                "id": 2,
+                "roleGroup": "Organizer"
+            }
+        },
+        {
+            "id": 1517,
+            "userName": "Sylvia Bauch",
+            "userEmail": "arvey@example.com",
+            "role": {
+                "id": 2,
+                "roleGroup": "Organizer"
+            }
+        },
+        {
+            "id": 81830,
+            "userName": "Miss Dixie Lesch",
+            "userEmail": "unice@example.com",
+            "role": {
+                "id": 1,
+                "roleGroup": "Basic"
+            }
+        },
+        {
+            "id": 22780,
+            "userName": "Robert Veum",
+            "userEmail": "earl@example.com",
+            "role": {
+                "id": 1,
+                "roleGroup": "Basic"
+            }
+        },
+        {
+            "id": 33685,
+            "userName": "Lela Buckridge",
+            "userEmail": "ydney@example.com",
+            "role": {
+                "id": 1,
+                "roleGroup": "Basic"
+            }
+        },
+        {
+            "id": 6203,
+            "userName": "Jerome Jacobi",
+            "userEmail": "atlyn@example.com",
+            "role": {
+                "id": 1,
+                "roleGroup": "Basic"
+            }
+        },
+        {
+            "id": 89568,
+            "userName": "Marco Hintz",
+            "userEmail": "oannie@example.com",
+            "role": {
+                "id": 1,
+                "roleGroup": "Basic"
+            }
+        },
+        {
+            "id": 29222,
+            "userName": "Becky Considine DDS",
+            "userEmail": "lavie@example.com",
+            "role": {
+                "id": 1,
+                "roleGroup": "Basic"
+            }
+        },
+        {
+            "id": 80854,
+            "userName": "Gregory Kuhic",
+            "userEmail": "lysson@example.com",
+            "role": {
+                "id": 1,
+                "roleGroup": "Basic"
+            }
+        },
+        {
+            "id": 87645,
+            "userName": "Ms. Grace Gutmann",
+            "userEmail": "laina@example.com",
+            "role": {
+                "id": 2,
+                "roleGroup": "Organizer"
+            }
+        },
+        {
+            "id": 85598,
+            "userName": "Woodrow Mohr",
+            "userEmail": "lias@example.com",
+            "role": {
+                "id": 1,
+                "roleGroup": "Basic"
+            }
+        }
+    ]
+}

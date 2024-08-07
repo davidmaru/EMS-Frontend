@@ -1,0 +1,72 @@
+/* src/global.scss */
+:root {
+    --background-light: #ffffff;
+    --background-dark: #303030;
+    --text-light: #000000;
+    --text-dark: #ffffff;
+    --scrollbar-thumb-light: lightblue;
+    --scrollbar-thumb-dark: #555555;
+    --scrollbar-track: #f0f0f0;
+}
+
+[data-theme='light'] {
+    --background: var(--background-light);
+    --text-color: var(--text-light);
+    --scrollbar-thumb: var(--scrollbar-thumb-light);
+    --scrollbar-track: var(--scrollbar-track);
+}
+
+[data-theme='dark'] {
+    --background: var(--background-dark);
+    --text-color: var(--text-dark);
+    --scrollbar-thumb: var(--scrollbar-thumb-dark);
+    --scrollbar-track: #303030;
+}
+
+body {
+    font-family: 'Roboto', Arial, Helvetica, sans-serif;
+    background-color: var(--background);
+    color: var(--text-color);
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+.dashApp {
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+.dashApp {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+
+    .panel {
+        flex-shrink: 0;
+    }
+
+    .main {
+        flex-grow: 1;
+        padding-block: 1em;
+        overflow-y: auto;
+
+        &::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        &::-webkit-scrollbar-track {
+            background: var(--scrollbar-track);
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background-color: var(--scrollbar-thumb);
+            border-radius: 20px;
+        }
+    }
+}

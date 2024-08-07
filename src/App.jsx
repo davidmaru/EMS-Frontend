@@ -20,7 +20,7 @@ import Eventlist from './scenes/Eventlist/eventlist';
 
 function App() {
   const [theme, colorMode] = useMode();
-  const Location = useLocation();
+  const location = useLocation();
 
   const hideTopbar = location.pathname === '/Admin';
   return (
@@ -39,7 +39,7 @@ function App() {
               <Route path="/AddEventPage" element={<AddEventPage/>}/>
               <Route path="/Admin" element={<Admin/>}/>
               <Route path="/Eventpage" element= {<Eventpage/>}/>
-              <Route path="/Eventlist" element= {<Eventlist/>}/>
+              <Route path="/Eventlist" element= {<Eventlist/>}/>      
               </Routes>
               </main>
         </div>

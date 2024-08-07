@@ -1,0 +1,42 @@
+.toggle-event-list {
+    $border-values: 1px solid black;
+
+    margin-top: 1rem;
+    margin-inline: .2rem;
+    border: 1px solid black;
+
+    .toggler {
+        background-color: #eeeeee;
+        // border: 1px solid black;
+        border-bottom: none;
+        display: flex;
+        padding-top: .5rem;
+
+        // padding-block: 1rem;
+        .the-rest {
+            flex-grow: 1;
+            border-bottom: $border-values;
+        }
+
+        button {
+            padding: .5rem 1rem;
+            border: 1px solid transparent;
+            // background-color: skyblue;
+            background-color: transparent;
+            border-bottom: $border-values;
+            font-size: 16px;
+        }
+
+        .btn {
+            &:hover {
+                cursor: pointer;
+            }
+        }
+
+        .selected {
+            border: $border-values;
+            border-bottom: none;
+            background-color: white;
+        }
+    }
+}

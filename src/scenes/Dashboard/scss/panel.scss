@@ -1,0 +1,68 @@
+// src/scss/panel.scss
+.panel {
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-block: 1em;
+    gap: 1rem;
+    padding-inline-start: .5em;
+    height: 100vh;
+    position: sticky;
+    background-color: var(--background);
+
+    .profile {
+        margin-top: auto;
+    }
+
+    .nav {
+        padding-block: .25em;
+    }
+
+    .nav:hover {
+        cursor: pointer;
+        border: 1px solid black;
+    }
+
+    .icon-item:hover {
+        border: 1px solid black;
+        cursor: pointer;
+    }
+
+    .panel-item {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid transparent;
+
+        .menu:hover {
+            border: 1px solid black;
+            cursor: pointer;
+        }
+
+        .icon {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 2rem;
+        }
+
+        .text {
+            font-size: 18px;
+            overflow: hidden;
+            box-sizing: border-box;
+            transition: width .5s ease-in, padding .5s ease-in;
+        }
+
+        .close {
+            width: 0;
+            padding: 0;
+            margin: 0;
+        }
+
+        .open {
+            width: 8rem;
+            padding-left: .5rem;
+        }
+    }
+}

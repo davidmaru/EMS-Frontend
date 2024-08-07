@@ -1,0 +1,26 @@
+.user-detail-form{
+    padding-inline: 1em;
+    .details{
+        margin-top: 1em;
+        display: grid;
+        grid-template-columns: 15rem 15rem;
+        grid-template-rows: 2rem 2rem;
+        gap: 1em;
+        .display, select{
+            border: 1px solid black;
+            padding-block: .2em;
+            padding-left: .5em;
+            border-radius: 4px;
+            width: 20em;
+            
+        }
+        .edit-display{
+            width: 100%;
+        }
+        .edit-display-role{
+            // border: 1px solid black;
+            .display{
+            }
+        }
+    }
+}

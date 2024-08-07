@@ -1,0 +1,19 @@
+.user-page {
+        display: flex;
+        flex-direction: column;
+        overflow-x: hidden;
+        padding: 1rem; // Add padding for better spacing around the edges
+    
+        .user-search {
+            display: flex;
+            justify-content: flex-end;
+            padding: 0.5rem 1rem; // Adjusted padding for a cleaner look
+            background-color: #f5f5f5; // Light background to separate from the rest of the content
+            border-radius: 8px; // Rounded corners for a modern appearance
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); // Subtle shadow for depth
+    
+            // Optional: Add a border to highlight the search area
+            border: 1px solid #dcdcdc;
+        }
+    }
+    
