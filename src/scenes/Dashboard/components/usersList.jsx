@@ -18,10 +18,12 @@ import Paper from '@mui/material/Paper';
 
 import EditDisplay from './editDisplay';
 import EditDisplayRole from './editDisplayRole';
+import { useNavigate } from 'react-router-dom';
 
 export default function UsersList({ users, roles }) {
   const [changeTracker, setChangeTracker] = useState([]);
   const [discardController, setDiscardController] = useState(false);
+  const navigate = useNavigate()
 
   const handleChange = (user, key) => {
     return function (value) {
@@ -89,7 +91,7 @@ export default function UsersList({ users, roles }) {
                 </TableHead>
                 <TableBody>
                   {users.map((user) => (
-                    <TableRow key={user.id}>
+                    <TableRow key={user.id} onClick={(_)=> navigate(`/dashboard/user/${user.id}`)}>
                       <TableCell>
                         <EditDisplay
                           defaultValue={user.userName}

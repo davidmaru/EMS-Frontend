@@ -20,6 +20,7 @@ import {
 
 import { styled } from '@mui/system';
 import "../scss/eventList.scss";
+import { useNavigate } from "react-router-dom";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -45,6 +46,7 @@ export default function EventList({ events=[], types=[], status=[] }) {
     const [eventList, setEventList] = useState(events);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
+    const navigate = useNavigate()
 
     useEffect(() => {
         setEventList(events);
@@ -135,7 +137,7 @@ export default function EventList({ events=[], types=[], status=[] }) {
                     <TableBody>
                         {
                             eventList.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((event) => (
-                                <StyledTableRow key={event.id} className="event-item">
+                                <StyledTableRow key={event.id} className="event-item" onClick={(_)=> navigate(`/dashboard/event/${event.id}`)}>
                                     <StyledTableCell>{event.id}</StyledTableCell>
                                     <StyledTableCell>{event.eventName}</StyledTableCell>
                                     <StyledTableCell>{new Date(event.startDateTime).toLocaleDateString() + " " + new Date(event.startDateTime).toLocaleTimeString()}</StyledTableCell>
