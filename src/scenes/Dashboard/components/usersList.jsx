@@ -128,12 +128,6 @@ export default function UsersList({ users, roles }) {
                           discardController={discardController}
                         />
                       </TableCell>
-                      <TableRow
-                      key={user.id}
-                      onClick={(event) => handleRowClick(user.id, event)}
-                      sx={{ cursor: 'pointer', '&:hover': { backgroundColor: 'action.hover' } }}
-                    >
-                    </TableRow>
                     </TableRow>
                   ))}
                 </TableBody>

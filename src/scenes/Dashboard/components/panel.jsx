@@ -40,7 +40,7 @@ function PanelItem({
   handler = () => {},
 }) {
   return (
-    <StyledPanelItem className={`panel-item ${classes}`} onClick={handler} close={close}>
+    <StyledPanelItem className={`panel-item ${classes}`} onClick={handler} >
       <span className="icon" style={{ marginRight: "8px" }}>
         {children}
       </span>
