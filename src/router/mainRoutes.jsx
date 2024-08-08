@@ -48,7 +48,7 @@ const MainRoutes = {
             element: <Eventpage />
         },
         {
-            path: "EventLiat",
+            path: "EventList",
             element: <EventList />
         }
     ]
