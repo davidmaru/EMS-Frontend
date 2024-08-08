@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { useNavigate, useResolvedPath } from "react-router-dom";
 import PropTypes from "prop-types";
+import { styled } from "@mui/system";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import Paper from "@mui/material/Paper";
@@ -15,6 +16,22 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import EventIcon from "@mui/icons-material/Event";
 import "../scss/panel.scss";
 
+const StyledPanelItem = styled(Box)(({ theme, close }) => ({
+  display: "flex",
+  alignItems: "center",
+  padding: "8px 16px",
+  transition: "all 0.3s",
+  cursor: "pointer",
+  "&:hover": { backgroundColor: theme.palette.action.hover },
+  ".text": {
+    opacity: close ? 0 : 1,
+    width: close ? 0 : "auto",
+    overflow: "hidden",
+    transition: "opacity 0.3s, width 0.3s",
+    whiteSpace: "nowrap",
+  },
+}));
+
 function PanelItem({
   children,
   text,
@@ -23,29 +40,12 @@ function PanelItem({
   handler = () => {},
 }) {
   return (
-    <Box
-      sx={{
-        display: "flex",
-        alignItems: "center",
-        padding: "8px 16px",
-        transition: "all 0.3s",
-        "&:hover": { backgroundColor: "action.hover" },
-        ".text": {
-          opacity: close ? 0 : 1,
-          width: close ? 0 : "auto",
-          overflow: "hidden",
-          transition: "opacity 0.3s, width 0.3s",
-          whiteSpace: "nowrap",
-        },
-      }}
-      className={`panel-item ${classes}`}
-      onClick={handler}
-    >
+    <StyledPanelItem className={`panel-item ${classes}`} onClick={handler} close={close}>
       <span className="icon" style={{ marginRight: "8px" }}>
         {children}
       </span>
       <span className={`text ${close ? "close" : "open"}`}>{text}</span>
-    </Box>
+    </StyledPanelItem>
   );
 }
 
@@ -54,13 +54,13 @@ PanelItem.propTypes = {
   text: PropTypes.string,
   close: PropTypes.bool,
   classes: PropTypes.string,
+  handler: PropTypes.func,
 };
 
 export default function Panel() {
   const [closed, setClosed] = useState(false);
   const navigate = useNavigate();
   const res = useResolvedPath().pathname;
-  // console.log(res.pathname);
 
   return (
     <Card
@@ -93,19 +93,16 @@ export default function Panel() {
       <PanelItem
         text="Home"
         close={closed}
-        classes={res == "/dashboard" ? "active" : ""}
-        handler={(_) => {
-          navigate("/dashboard");
-          // console.log("hello")
-        }}
+        classes={res === "/dashboard" ? "active" : ""}
+        handler={() => navigate("/dashboard")}
       >
         <HomeIcon />
       </PanelItem>
       <PanelItem
-        text={"Events"}
+        text="Events"
         close={closed}
         classes={res.startsWith("/dashboard/event") ? "active" : ""}
-        handler={(_)=> navigate("/dashboard/event")}
+        handler={() => navigate("/dashboard/event")}
       >
         <EventIcon />
       </PanelItem>
@@ -113,8 +110,7 @@ export default function Panel() {
         text="Users"
         close={closed}
         classes={res.startsWith("/dashboard/user") ? "active" : ""}
-              handler={(_) => navigate("/dashboard/user")}
-
+        handler={() => navigate("/dashboard/user")}
       >
         <PersonIcon />
       </PanelItem>
@@ -128,7 +124,7 @@ export default function Panel() {
       <PanelItem text="" close={closed}>
         <AccountCircleIcon fontSize="large" />
       </PanelItem>
-      <PanelItem text="" close={closed}>
+      <PanelItem text="" close={closed} handler={() => navigate("/")}>
         <SettingsIcon fontSize="large" />
       </PanelItem>
     </Card>

@@ -25,7 +25,7 @@ export default function Search({ handler = () => {} }) {
 
     useEffect(() => {
         handler(value);
-    }, [value]) //, handler]);
+    }, [value, handler]);
 
     return (
         <Box sx={{ display: 'flex', justifyContent: 'flex-end', width: '100%' }}>

@@ -6,6 +6,7 @@ import PropTypes from 'prop-types'; // Import PropTypes
 
 
 export default function EditDisplay({ defaultValue = "", handler = () => { }, discardController = null }) {
+    const [ setIsEditing] = useState(false);
     const [value, setValue] = useState(defaultValue);
     const [editMode, setEditMode] = useState(false)
     const input = useRef(null)
@@ -17,11 +18,19 @@ export default function EditDisplay({ defaultValue = "", handler = () => { }, di
         }
         setEditMode(false)
     }
-    const handleSaveClick = () => {
+    const handleSaveClick = (event) => {
+        event.stopPropagation(); 
         // if (value == defaultValue) return;
         handler(value)
         setEditMode(false)
-    }
+        setIsEditing(false);
+    };
+
+    const handleEditClick = (event) => {
+        event.stopPropagation(); // Prevent row click
+        setEditMode(true);
+    };
+
     useEffect(() => {
         // handleCrossClick()
         setValue(defaultValue)
@@ -36,7 +45,7 @@ export default function EditDisplay({ defaultValue = "", handler = () => { }, di
                             value
                         }
                     </p>
-                    <EditIcon sx={{ cursor: 'pointer'}}fontSize='small' onClick={() => setEditMode(true)} />
+                    <EditIcon sx={{ cursor: 'pointer'}}fontSize='small' onClick={handleEditClick}/>
                 </>) : (<>
                     <input
                         type="text"

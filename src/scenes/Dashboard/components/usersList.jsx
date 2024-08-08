@@ -1,6 +1,5 @@
-// src/components/UsersList.jsx
 import { useState } from 'react';
-import PropTypes from 'prop-types'; // Import PropTypes
+import PropTypes from 'prop-types';
 import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
 import Button from '@mui/material/Button';
@@ -23,36 +22,39 @@ import { useNavigate } from 'react-router-dom';
 export default function UsersList({ users, roles }) {
   const [changeTracker, setChangeTracker] = useState([]);
   const [discardController, setDiscardController] = useState(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleChange = (user, key) => {
-    return function (value) {
+    return (value) => {
       let changed = changeTracker.find((item) => item.id === user.id);
       let newChanges = [];
+
       if (key !== 'roleGroup') {
         if (changed) {
           changed = { ...changed, [key]: value };
-          newChanges = changeTracker.map((item) => {
-            if (item.id === user.id) {
-              return changed;
-            }
-            return item;
-          });
+          newChanges = changeTracker.map((item) => (item.id === user.id ? changed : item));
         } else {
           changed = { id: user.id, [key]: value.trim() };
           newChanges = [...changeTracker, changed];
         }
       } else {
         if (changed) {
-          changed = { ...changed, role: { id: value, [key]: roles.find((e) => e.id === value).roleGroup } };
-          newChanges = changeTracker.map((item) => {
-            if (item.id === user.id) {
-              return changed;
-            }
-            return item;
-          });
+          changed = {
+            ...changed,
+            role: {
+              id: value,
+              [key]: roles.find((e) => e.id === value).roleGroup,
+            },
+          };
+          newChanges = changeTracker.map((item) => (item.id === user.id ? changed : item));
         } else {
-          changed = { id: user.id, role: { id: value, [key]: roles.find((e) => e.id === value).roleGroup } };
+          changed = {
+            id: user.id,
+            role: {
+              id: value,
+              [key]: roles.find((e) => e.id === value).roleGroup,
+            },
+          };
           newChanges = [...changeTracker, changed];
         }
       }
@@ -62,6 +64,11 @@ export default function UsersList({ users, roles }) {
 
   const handleSave = () => {
     // Save changes logic here
+  };
+
+  const handleRowClick = (userId, event) => {
+    event.stopPropagation(); // Prevent row click if inside edit icon
+    navigate(`/dashboard/user/${userId}`);
   };
 
   return (
@@ -76,11 +83,14 @@ export default function UsersList({ users, roles }) {
                 color: 'white',
                 borderRadius: 1,
                 boxShadow: 3,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
               }}
             >
               <Typography variant="h6">Users Table</Typography>
             </Box>
-            <TableContainer component={Paper}>
+            <TableContainer component={Paper} sx={{ marginTop: 2 }}>
               <Table>
                 <TableHead>
                   <TableRow>
@@ -91,7 +101,11 @@ export default function UsersList({ users, roles }) {
                 </TableHead>
                 <TableBody>
                   {users.map((user) => (
-                    <TableRow key={user.id} onClick={(_)=> navigate(`/dashboard/user/${user.id}`)}>
+                    <TableRow
+                      key={user.id}
+                      onClick={(event) => handleRowClick(user.id, event)}
+                      sx={{ cursor: 'pointer', '&:hover': { backgroundColor: 'action.hover' } }}
+                    >
                       <TableCell>
                         <EditDisplay
                           defaultValue={user.userName}
@@ -114,6 +128,12 @@ export default function UsersList({ users, roles }) {
                           discardController={discardController}
                         />
                       </TableCell>
+                      <TableRow
+                      key={user.id}
+                      onClick={(event) => handleRowClick(user.id, event)}
+                      sx={{ cursor: 'pointer', '&:hover': { backgroundColor: 'action.hover' } }}
+                    >
+                    </TableRow>
                     </TableRow>
                   ))}
                 </TableBody>
@@ -124,9 +144,9 @@ export default function UsersList({ users, roles }) {
                 variant="contained"
                 color="primary"
                 startIcon={<SaveIcon />}
-                disabled={changeTracker.length <= 0}
+                disabled={changeTracker.length === 0}
                 onClick={handleSave}
-                sx={{ marginRight: 1, cursor: 'pointer' }}
+                sx={{ marginRight: 1 }}
               >
                 Save Changes
               </Button>
@@ -134,12 +154,11 @@ export default function UsersList({ users, roles }) {
                 variant="outlined"
                 color="secondary"
                 startIcon={<DeleteIcon />}
-                disabled={changeTracker.length <= 0}
+                disabled={changeTracker.length === 0}
                 onClick={() => {
                   setChangeTracker([]);
                   setDiscardController(!discardController);
                 }}
-                sx={{ cursor: 'pointer' }}
               >
                 Discard Changes
               </Button>
@@ -153,21 +172,21 @@ export default function UsersList({ users, roles }) {
 
 // Define PropTypes
 UsersList.propTypes = {
-    users: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.number.isRequired,
-        userName: PropTypes.string.isRequired,
-        userEmail: PropTypes.string.isRequired,
-        role: PropTypes.shape({
-          id: PropTypes.number.isRequired,
-          roleGroup: PropTypes.string.isRequired,
-        }).isRequired,
-      })
-    ).isRequired,
-    roles: PropTypes.arrayOf(
-      PropTypes.shape({
+  users: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      userName: PropTypes.string.isRequired,
+      userEmail: PropTypes.string.isRequired,
+      role: PropTypes.shape({
         id: PropTypes.number.isRequired,
         roleGroup: PropTypes.string.isRequired,
-      })
-    ).isRequired,
-  }
+      }).isRequired,
+    })
+  ).isRequired,
+  roles: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      roleGroup: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+};

@@ -34,6 +34,7 @@ const OrganizersPage = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
   return (
     <div>
       {/* Topbar */}
@@ -52,23 +53,23 @@ const OrganizersPage = () => {
         {/* ICONS */}
         <Box display="flex" alignItems="center">
           <Tooltip title="Home">
-          <IconButton component={Link} to="/" sx={{ color: colors.grey[100] }}>
-            <HomeIcon />
-          </IconButton>
+            <IconButton component={Link} to="/" sx={{ color: colors.grey[100] }}>
+              <HomeIcon />
+            </IconButton>
           </Tooltip>
           <Tooltip title="Theme">
-          <IconButton onClick={colorMode.toggleColorMode} sx={{ ml: 1 }}>
-            {theme.palette.mode === "dark" ? (
-              <DarkModeOutlinedIcon sx={{ color: colors.grey[100] }} />
-            ) : (
-              <LightModeOutlinedIcon sx={{ color: colors.grey[100] }} />
-            )}
-          </IconButton>
+            <IconButton onClick={colorMode.toggleColorMode} sx={{ ml: 1 }}>
+              {theme.palette.mode === "dark" ? (
+                <DarkModeOutlinedIcon sx={{ color: colors.grey[100] }} />
+              ) : (
+                <LightModeOutlinedIcon sx={{ color: colors.grey[100] }} />
+              )}
+            </IconButton>
           </Tooltip>
           <Tooltip title="Add Event">
-          <IconButton component= {Link} to= "/AddEventPage" sx={{ ml: 1 }}>
-            <AddCircleOutlineOutlinedIcon sx={{ color: colors.grey[100] }} />
-          </IconButton>
+            <IconButton component={Link} to="/AddEventPage" sx={{ ml: 1 }}>
+              <AddCircleOutlineOutlinedIcon sx={{ color: colors.grey[100] }} />
+            </IconButton>
           </Tooltip>
           <Link to="/Eventpage">
             <Tooltip title="Event List">
@@ -78,9 +79,9 @@ const OrganizersPage = () => {
             </Tooltip>
           </Link>
           <Tooltip title="Profile">
-          <IconButton component={Link} to="/authpage" sx={{ ml: 1 }}>
-            <PersonOutlinedIcon sx={{ color: colors.grey[100] }} />
-          </IconButton>
+            <IconButton component={Link} to="/authpage" sx={{ ml: 1 }}>
+              <PersonOutlinedIcon sx={{ color: colors.grey[100] }} />
+            </IconButton>
           </Tooltip>
           <Tooltip title="Settings">
             <IconButton onClick={handleClick} sx={{ ml: 1 }}>
@@ -97,12 +98,11 @@ const OrganizersPage = () => {
               },
             }}
           >
-            <MenuItem onClick={handleClose} component={Link} to="/Admin">
+            <MenuItem onClick={handleClose} component={Link} to="/dashboard">
               Admin Dashboard
             </MenuItem>
             {/* Add other menu items here if needed */}
           </Menu>
-
         </Box>
 
         {/* PAGE NAME */}
@@ -112,12 +112,12 @@ const OrganizersPage = () => {
       </Box>
 
       {/* Page Content */}
-      <Container style={{ marginTop: '80px' }}>
-        <Typography variant="h4" gutterBottom style={{ marginTop: '20px', fontWeight: 'bold' }}>
+      <Container sx={{ marginTop: '80px', textAlign: 'center' }}>
+        <Typography variant="h4" gutterBottom sx={{ marginTop: '20px', fontWeight: 'bold' }}>
           Event Organizers
         </Typography>
-        
-        <Grid container spacing={3}>
+
+        <Grid container spacing={3} justifyContent="center">
           {organizers.map((organizer) => (
             <Grid item xs={12} sm={6} md={4} key={organizer.id}>
               <Card sx={{ boxShadow: 3, borderRadius: 2 }}>
@@ -131,7 +131,7 @@ const OrganizersPage = () => {
                     {organizer.bio}
                   </Typography>
                 </CardContent>
-                <Box display="flex" justifyContent="flex-end" p={2}>
+                <Box display="flex" justifyContent="center" p={2}>
                   <Button variant="contained" color="primary" size="small">Contact</Button>
                 </Box>
               </Card>

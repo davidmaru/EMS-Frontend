@@ -1,49 +1,52 @@
-// src/scss/panel.scss
-.active{
-    border: 1px solid black;
-    border-right: none;
-    background-color: #0d6efd;
-    color: white;
+.active {
+    border-left: 4px solid #0d6efd;
+    background-color: rgba(13, 110, 253, 0.1);
+    color: #0d6efd;
 }
+
 .panel {
-    border: 1px solid black;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-block: 1em;
     gap: 1rem;
-    padding-inline-start: .5em;
     height: 100vh;
-    position: sticky;
     background-color: var(--background);
+    padding: 1em 0.5em;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
 
     .profile {
         margin-top: auto;
     }
 
     .nav {
-        padding-block: .25em;
-    }
+        padding: 0.25em;
+        border-radius: 8px;
+        transition: background-color 0.3s ease, border 0.3s ease;
 
-    .nav:hover {
-        cursor: pointer;
-        border: 1px solid black;
+        &:hover {
+            cursor: pointer;
+            background-color: rgba(0, 0, 0, 0.05);
+            border-left: 4px solid #0d6efd;
+        }
     }
 
     .icon-item:hover {
-        border: 1px solid black;
         cursor: pointer;
     }
 
     .panel-item {
         display: flex;
         align-items: center;
-        justify-content: center;
-        border: 1px solid transparent;
+        justify-content: flex-start;
+        width: 100%;
+        padding: 8px 16px;
+        border-radius: 8px;
+        transition: background-color 0.3s ease, color 0.3s ease;
+        cursor: pointer;
 
-        .menu:hover {
-            border: 1px solid black;
-            cursor: pointer;
+        &.menu:hover {
+            background-color: rgba(0, 0, 0, 0.05);
         }
 
         .icon {
@@ -51,13 +54,14 @@
             justify-content: center;
             align-items: center;
             width: 2rem;
+            margin-right: 8px;
         }
 
         .text {
             font-size: 18px;
             overflow: hidden;
             box-sizing: border-box;
-            transition: width .5s ease-in, padding .5s ease-in;
+            transition: width 0.5s ease-in, padding 0.5s ease-in;
         }
 
         .close {
@@ -68,7 +72,7 @@
 
         .open {
             width: 8rem;
-            padding-left: .5rem;
+            padding-left: 0.5rem;
         }
     }
 }
