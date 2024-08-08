@@ -66,8 +66,8 @@ export default function UsersList({ users, roles }) {
     // Save changes logic here
   };
 
-  const handleRowClick = (userId, event) => {
-    event.stopPropagation(); // Prevent row click if inside edit icon
+  const handleRowClick = (userId) => {
+    // event.stopPropagation(); // Prevent row click if inside edit icon
     navigate(`/dashboard/user/${userId}`);
   };
 
@@ -103,7 +103,7 @@ export default function UsersList({ users, roles }) {
                   {users.map((user) => (
                     <TableRow
                       key={user.id}
-                      onClick={(event) => handleRowClick(user.id, event)}
+                      // onClick={(event) => handleRowClick(user.id, event)}
                       sx={{ cursor: 'pointer', '&:hover': { backgroundColor: 'action.hover' } }}
                     >
                       <TableCell>
@@ -111,6 +111,7 @@ export default function UsersList({ users, roles }) {
                           defaultValue={user.userName}
                           handler={handleChange(user, 'userName')}
                           discardController={discardController}
+                          displayClick={(_)=> handleRowClick(user.id)}
                         />
                       </TableCell>
                       <TableCell>
@@ -118,6 +119,7 @@ export default function UsersList({ users, roles }) {
                           defaultValue={user.userEmail}
                           handler={handleChange(user, 'userEmail')}
                           discardController={discardController}
+                          displayClick={(_)=> handleRowClick(user.id)}
                         />
                       </TableCell>
                       <TableCell>

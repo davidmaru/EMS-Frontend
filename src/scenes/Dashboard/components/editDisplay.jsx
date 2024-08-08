@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types'; // Import PropTypes
 
 
-export default function EditDisplay({ defaultValue = "", handler = () => { }, discardController = null }) {
+export default function EditDisplay({ defaultValue = "", handler = () => { }, discardController = null, displayClick=()=>{} }) {
     const [ setIsEditing] = useState(false);
     const [value, setValue] = useState(defaultValue);
     const [editMode, setEditMode] = useState(false)
@@ -19,15 +19,15 @@ export default function EditDisplay({ defaultValue = "", handler = () => { }, di
         setEditMode(false)
     }
     const handleSaveClick = (event) => {
-        event.stopPropagation(); 
+        // event.stopPropagation(); 
         // if (value == defaultValue) return;
         handler(value)
         setEditMode(false)
-        setIsEditing(false);
+        // setIsEditing(false);
     };
 
     const handleEditClick = (event) => {
-        event.stopPropagation(); // Prevent row click
+        // event.stopPropagation(); // Prevent row click
         setEditMode(true);
     };
 
@@ -40,7 +40,7 @@ export default function EditDisplay({ defaultValue = "", handler = () => { }, di
         <div className="edit-display">
             {
                 !editMode ? (<>
-                    <p className='display'>
+                    <p className='display' onClick={displayClick}>
                         {
                             value
                         }
