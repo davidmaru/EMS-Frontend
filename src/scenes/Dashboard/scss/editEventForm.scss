@@ -1,0 +1,20 @@
+.edit-event-form {
+    display: flex;
+    flex-direction: column;
+    max-width: 1200px; // Adjusted max-width for better use of space
+    margin: auto; // Center the form
+    
+    .form-container {
+      flex: 1;
+    }
+  
+    .sidebar {
+      width: 300px;
+      padding: 16px;
+      background-color: #f4f4f4;
+      border-radius: 8px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+      margin-left: 16px;
+    }
+  }
+  

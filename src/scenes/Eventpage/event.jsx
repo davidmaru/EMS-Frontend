@@ -1,6 +1,6 @@
 
-import React, { useEffect, useState } from 'react';
-import { Container, Grid, Box } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { Container, Box } from '@mui/material';
 
 const Eventpage = () => {
   const [events, setEvents] = useState([]);

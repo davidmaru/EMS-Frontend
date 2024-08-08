@@ -1,7 +1,9 @@
+/* eslint-disable react/prop-types */
 
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {Link} from "react-router-dom";
 
+// eslint-disable-next-line react/prop-types
 const EventCard = ({ event }) => {
   return (
     <div className="event-card">
@@ -79,7 +81,7 @@ const EventList = () => {
       `}</style>
 
         <Link to="/cartpage">
-            <button   sx={{ backgroundColor:"blue"}}> 
+            <button style={{ backgroundColor:"blue"}}> 
               <div className="event-list">
                 {events.map(event => (
                   <EventCard key={event.Id} event={event} />

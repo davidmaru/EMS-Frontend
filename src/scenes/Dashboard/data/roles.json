@@ -1,0 +1,21 @@
+{
+    "roles": [
+        {
+            "id": 1,
+            "roleGroup": "Basic",
+            "permissions": [
+                "attendEvents"
+            ]
+        },
+        {
+            "id": 2,
+            "roleGroup": "Organizer",
+            "permissions": [
+                "attendEvents",
+                "createEvents",
+                "deleteEvents",
+                "veiwAttendees"
+            ]
+        }
+    ]
+}

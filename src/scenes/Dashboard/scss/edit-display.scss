@@ -1,0 +1,44 @@
+.edit-display {
+    display: flex;
+    align-items: center;
+    // justify-content: center;
+    gap: .2em;
+
+    .edit {
+        font-size: 16px;
+        padding-left: .2rem;
+        padding-block: 3px;
+        width: 12rem;
+        border: 1px solid black;
+        border-radius: .2rem;
+    }
+
+    .display {
+        min-width: 10rem;
+        // border: 1px solid black;
+    }
+
+    .cross {
+        font-size: 1.1rem;
+        font-weight: bold;
+        border: 1px solid transparent;
+
+        &:hover {
+            cursor: pointer;
+            border: 1px solid black;
+            border-radius: .2rem;
+        }
+    }
+
+    .icon {
+        border: 1px solid transparent;
+        // width: 100%;
+        font-size: 24px;
+
+        &:hover {
+            cursor: pointer;
+            border: 1px solid black;
+            border-radius: .2rem;
+        }
+    }
+}

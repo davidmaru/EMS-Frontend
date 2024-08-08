@@ -41,8 +41,8 @@ const categories = [
   { name: "Technology", icon: <ComputerIcon /> },
   { name: "Education", icon: <SchoolIcon /> },
   { name: "Health", icon: <HealthAndSafetyIcon /> },
-  { name: "Comedy", icon: <TheaterComedyIcon /> }, 
-  { name: "Movies", icon: <MovieIcon /> }, 
+  { name: "Comedy", icon: <TheaterComedyIcon /> },
+  { name: "Movies", icon: <MovieIcon /> },
   { name: "Deals", icon: <LocalOfferIcon /> },
 ];
 const events = [
@@ -53,8 +53,8 @@ const events = [
   { id: 5, name: "Event 5", date: "2024-08-30", description: "Description for Event 5", image: Group },
   { id: 6, name: "Event 6", date: "2024-08-20", description: "Description for Event 6", image: Wine },
   { id: 7, name: "Event 7", date: "2024-08-17", description: "Description for Event 7", image: Glasses },
-  { id: 7, name: "Event 8", date: "2024-08-17", description: "Description for Event 8", image: Blue },
-  { id: 8, name: "Event 8", date: "2024-08-29", description: " UDA CELEBRATIONS", image: WILLIAM },
+  { id: 8, name: "Event 8", date: "2024-08-17", description: "Description for Event 8", image: Blue },
+  { id: 9, name: "Event 8", date: "2024-08-29", description: " UDA CELEBRATIONS", image: WILLIAM },
 
 
 
@@ -82,26 +82,26 @@ const HomePage = () => {
                 component="img"
                 image={image.src}
                 alt={`Image ${index + 1}`}
-                sx={{ 
-                  width: '100%', 
+                sx={{
+                  width: '100%',
                   height: '100%',
                   objectFit: 'cover'
                 }}
               />
-              <Box 
+              <Box
                 sx={{
                   position: 'absolute',
                   bottom: 0,
                   left: 0,
                   width: '100%',
-                  backgroundColor: 'rgba(0, 0, 0, 0.6)', 
+                  backgroundColor: 'rgba(0, 0, 0, 0.6)',
                   color: 'white',
                   padding: '8px',
                   display: 'flex',
                   justifyContent: 'space-between',
                   alignItems: 'center',
                   boxSizing: 'border-box',
-                  height: '80px', 
+                  height: '80px',
                 }}
               >
                 <Typography variant="subtitle2" sx={{ maxWidth: '70%', fontSize: '0.9rem' }}>
@@ -182,7 +182,7 @@ const HomePage = () => {
         <Grid container spacing={3}>
           {events.map((event) => (
             <Grid item xs={12} sm={6} md={4} key={event.id}>
-              <Card sx={{backgroundColor: "initial"}}>
+              <Card sx={{ backgroundColor: "initial" }}>
                 <CardMedia
                   component="img"
                   image={event.image}

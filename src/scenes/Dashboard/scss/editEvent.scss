@@ -1,0 +1,25 @@
+.edit-event {
+    padding-inline: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+
+
+    .btns {
+        margin-top: 1rem;
+        display: flex;
+        gap: 1rem;
+
+        button {
+            padding: .5rem 1rem;
+            font-size: 16px;
+            border-radius: .2rem;
+            border: 1px solid black;
+            background-color: white;
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
+}

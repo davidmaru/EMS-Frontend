@@ -13,14 +13,14 @@ import AuthPage from './scenes/AuthPage';
 import CheckoutPage from './scenes/CheckoutPage/CheckoutPage';
 import Cart from './scenes/cartPage/cart';
 import AddEventPage from './scenes/OrganizersPage/AddEvent';
-import Admin from './scenes/Admin/Admin';
 import  Eventpage from './scenes/Eventpage/event';
 import Eventlist from './scenes/Eventlist/eventlist';
+import { Dashboard } from '@mui/icons-material';
 
 
 function App() {
   const [theme, colorMode] = useMode();
-  const Location = useLocation();
+  const location = useLocation();
 
   const hideTopbar = location.pathname === '/Admin';
   return (
@@ -37,9 +37,9 @@ function App() {
               <Route path="/CheckoutPage" element={<CheckoutPage />}/>
               <Route path="/cartpage" element={<Cart/>}/>
               <Route path="/AddEventPage" element={<AddEventPage/>}/>
-              <Route path="/Admin" element={<Admin/>}/>
+              <Route path="/dashboard" element={<Dashboard/>}/>
               <Route path="/Eventpage" element= {<Eventpage/>}/>
-              <Route path="/Eventlist" element= {<Eventlist/>}/>
+              <Route path="/Eventlist" element= {<Eventlist/>}/>      
               </Routes>
               </main>
         </div>
