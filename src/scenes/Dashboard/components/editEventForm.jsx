@@ -1,16 +1,28 @@
 import PropTypes from 'prop-types';
 import { TextField, Select, MenuItem, Grid, Box, InputLabel, FormControl, Typography, Button, IconButton } from '@mui/material';
-import { Save as SaveIcon, Cancel as CancelIcon} from '@mui/icons-material';
+import { Save as SaveIcon, Cancel as CancelIcon } from '@mui/icons-material';
 import '../scss/editEventForm.scss';
 import { useTheme } from '../UseTheme';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 
 
-function EditEventForm({ event = {}, types = [], status = []}) {
-    const { mode, toggleMode } = useTheme();
+function EditEventForm({ event = {}, types = [], status = [] }) {
+  const { mode, toggleMode } = useTheme();
 
-    return (
+  const convertToDateTimeLocalString = (date) => {
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const day = date.getDate().toString().padStart(2, "0");
+    const hours = date.getHours().toString().padStart(2, "0");
+    const minutes = date.getMinutes().toString().padStart(2, "0");
+
+    const value = `${year}-${month}-${day}T${hours}:${minutes}`;
+    // console.log(event.)
+    return value
+  }
+  // console.log(event)
+  return (
     <Box className="edit-event-form" p={3} borderRadius={2} boxShadow={3}>
       <Grid container justifyContent="space-between" alignItems="center">
         <Typography variant="h4" gutterBottom>
@@ -18,8 +30,8 @@ function EditEventForm({ event = {}, types = [], status = []}) {
         </Typography>
         {/* Theme Toggle Button */}
         <IconButton onClick={toggleMode} color={mode === 'light' ? 'primary' : 'secondary'}>
-                    {mode === 'light' ? <DarkModeIcon /> : <LightModeIcon />}
-                </IconButton>
+          {mode === 'light' ? <DarkModeIcon /> : <LightModeIcon />}
+        </IconButton>
       </Grid>
       <Grid container spacing={3}>
         {/* Event Name */}
@@ -40,7 +52,7 @@ function EditEventForm({ event = {}, types = [], status = []}) {
             type="datetime-local"
             variant="outlined"
             InputLabelProps={{ shrink: true }}
-            defaultValue={event.startDate || ''}
+            defaultValue={convertToDateTimeLocalString(new Date(event.startDateTime))}
           />
         </Grid>
 
@@ -201,24 +213,24 @@ function EditEventForm({ event = {}, types = [], status = []}) {
   );
 }
 
-EditEventForm.propTypes = {
-  event: PropTypes.shape({
-    name: PropTypes.string,
-    startDate: PropTypes.string,
-    duration: PropTypes.number,
-    price: PropTypes.number,
-    capacity: PropTypes.number,
-    locationVenue: PropTypes.string,
-    ticketQuantity: PropTypes.number,
-    organizerId: PropTypes.string,
-    description: PropTypes.string,
-    schedule: PropTypes.string,
-    eventType: PropTypes.string,
-    eventStatus: PropTypes.string,
-  }),
-  types: PropTypes.arrayOf(PropTypes.string),
-  status: PropTypes.arrayOf(PropTypes.string),
-  onThemeToggle: PropTypes.func,  // Add this to handle the theme toggle
-};
+// EditEventForm.propTypes = {
+//   event: PropTypes.shape({
+//     name: PropTypes.string,
+//     startDate: PropTypes.string,
+//     duration: PropTypes.number,
+//     price: PropTypes.number,
+//     capacity: PropTypes.number,
+//     locationVenue: PropTypes.string,
+//     ticketQuantity: PropTypes.number,
+//     organizerId: PropTypes.string,
+//     description: PropTypes.string,
+//     schedule: PropTypes.string,
+//     eventType: PropTypes.string,
+//     eventStatus: PropTypes.string,
+//   }),
+//   types: PropTypes.arrayOf(PropTypes.string),
+//   status: PropTypes.arrayOf(PropTypes.string),
+//   onThemeToggle: PropTypes.func,  // Add this to handle the theme toggle
+// };
 
 export default EditEventForm;

@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import PropTypes from 'prop-types';
 import Search from "./search.jsx";
 import {
     Box,
@@ -43,11 +42,11 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     },
 }));
 
-export default function EventList({ events=[], types=[], status=[] }) {
+export default function EventList({ events = [], types = [], status = [] }) {
     const [eventList, setEventList] = useState(events);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
-    const [ setEditingId] = useState(null); // Track which row is being edited
+    const [setEditingId] = useState(null); // Track which row is being edited
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -91,13 +90,10 @@ export default function EventList({ events=[], types=[], status=[] }) {
     };
     const handleRowClick = (event, id) => {
         // Prevent navigation if the click is on the edit button
-        if (event.target.closest('.edit-icon')) return;
+        // if (event.target.closest('.edit-icon')) return;
         navigate(`/dashboard/event/${id}`);
     };
-    const handleEditClick = (event, id) => {
-        event.stopPropagation(); // Prevent row click
-        setEditingId(id); // Set the editing row ID
-    };
+
 
 
     return (
@@ -138,9 +134,9 @@ export default function EventList({ events=[], types=[], status=[] }) {
                 <Table className="event-table">
                     <TableHead>
                         <TableRow
-                         key={event.id}
-                         className="event-item"
-                         onClick={(event) => handleRowClick(event, event.id)}
+                            //  key={event.id}
+                            className="event-item"
+                            onClick={(event) => handleRowClick(event, event.id)}
                         >
                             <StyledTableCell>Id</StyledTableCell>
                             <StyledTableCell>Name</StyledTableCell>
@@ -153,21 +149,20 @@ export default function EventList({ events=[], types=[], status=[] }) {
                     <TableBody>
                         {
                             eventList.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((event) => (
-                                <StyledTableRow key={event.id} className="event-item" onClick={()=> navigate(`/dashboard/event/${event.id}`)}>
+                                <StyledTableRow key={event.id} className="event-item" onClick={() => navigate(`/dashboard/event/${event.id}`)}>
                                     <StyledTableCell>{event.id}</StyledTableCell>
                                     <StyledTableCell>{event.eventName}</StyledTableCell>
                                     <StyledTableCell>{new Date(event.startDateTime).toLocaleDateString() + " " + new Date(event.startDateTime).toLocaleTimeString()}</StyledTableCell>
                                     <StyledTableCell>{event.duration}</StyledTableCell>
                                     <StyledTableCell>{event.eventType}</StyledTableCell>
                                     <StyledTableCell>{event.status}</StyledTableCell>
-                                    <StyledTableCell>
-                                    <EditIcon
+                                    {/* <StyledTableCell>
+                                        <EditIcon
                                             className="edit-icon"
                                             sx={{ cursor: 'pointer' }}
                                             fontSize='small'
-                                            onClick={(event) => handleEditClick(event, event.id)} // Handle edit click
                                         />
-                                    </StyledTableCell>   
+                                    </StyledTableCell> */}
                                 </StyledTableRow>
                             ))
                         }
@@ -186,17 +181,3 @@ export default function EventList({ events=[], types=[], status=[] }) {
         </Box>
     );
 }
-
-EventList.propTypes = {
-    events: PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.number.isRequired,
-        eventName: PropTypes.string.isRequired,
-        startDateTime: PropTypes.string.isRequired,
-        duration: PropTypes.string.isRequired,
-        eventType: PropTypes.string.isRequired,
-        status: PropTypes.string.isRequired,
-    })).isRequired,
-    types: PropTypes.arrayOf(PropTypes.string).isRequired,
-    status: PropTypes.arrayOf(PropTypes.string).isRequired,
-};
-

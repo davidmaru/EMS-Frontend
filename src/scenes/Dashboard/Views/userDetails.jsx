@@ -1,26 +1,36 @@
 import { useState } from "react";
-import { Button, Container, Typography, Paper, Stack } from '@mui/material';
+import { Button, Container, Typography, Paper, Stack, CircularProgress } from '@mui/material';
 import EventList from "../components/eventList";
 import { UserDetail } from "../components/userDetail";
-import roles from "../data/roles.json";
-import users from "../data/users.json";
-import events from "../data/events.json";
-import types from "../data/eventTypes.json";
-import status from "../data/eventStatus.json";
 import "../scss/eventDetails.scss";
+import { useLocation } from "react-router-dom";
+import { useEvents, useEventStatuses, useEventTypes } from "../../../hooks/useUserQuery";
 
 export default function UserDetails() {
     const [organizedMode, setOrganizedMode] = useState(true);
+    const { error: statusError, loading: statusLoading, data: statusData } = useEventStatuses()
+    const { error: typesError, loading: typesLoading, data: typesData } = useEventTypes()
+    const { error: eventsError, loading: eventsLoading, data: eventsData} = useEvents()
+    let location = useLocation();
 
-    const user_details = {
-        id: 1,
-        userName: "hello",
-        userEmail: "hello@gmail.com",
-        role: {
-            roleGroup: "Basic",
-            id: 1
-        }
-    };
+    if (statusError || typesError || eventsError) {
+        return (<><p>Error has occured</p> <p>{statusError.message || typesError.message || eventsData}</p></>)
+    }
+    if (statusLoading || typesLoading || eventsLoading) {
+        return <CircularProgress />
+    }
+
+    const status = statusData.eventStatuses;
+    const types = typesData.eventTypes;
+    const events = eventsData.events;
+    // console.log("userDetails")
+    const user = location.state.user
+    const roles = location.state.roles;
+    // console.log(location.state.roles)
+    if (!user || !roles) {
+        return (<><p>Error has occured in getting user details</p></>)
+    }
+
 
     function eventsAttended() {
         const count = 15;
@@ -40,7 +50,7 @@ export default function UserDetails() {
     }
 
     function eventsOrganized() {
-        return events.filter(e => e.organizerId === 99935);
+        return events.filter(e => e.organizerId === user.id);
     }
 
     return (
@@ -49,7 +59,8 @@ export default function UserDetails() {
                 <Typography variant="h4" gutterBottom>
                     User Details
                 </Typography>
-                <UserDetail user={users.users.find(u => u.id == 99935) || user_details} roles={roles.roles} />
+                {/* <UserDetail user={users.users.find(u => u.id == 99935) || user_details} roles={roles.roles} /> */}
+                <UserDetail user={user} roles={roles} />
             </Paper>
             <Paper elevation={3} sx={{ p: 3 }}>
                 <Stack direction="row" spacing={2} sx={{ mb: 1 }}>

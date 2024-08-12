@@ -31,7 +31,7 @@ export default function RolesBtnList({ roles, handler = () => {} }) {
         >
             <Button
                 className="btn"
-                onClick={() => handler({ roleGroup: "" })}
+                onClick={() => handler( "All" )}
             >
                 All
             </Button>

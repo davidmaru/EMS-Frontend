@@ -1,96 +1,144 @@
-/* eslint-disable react/prop-types */
+import React, { useState } from 'react';
+import { Link } from "react-router-dom";
+import { useQuery, gql } from '@apollo/client';
+import { Box, Card, CardContent, CardMedia, CardActions, Typography, Container, Grid, Button, Divider, TextField, InputAdornment } from '@mui/material';
+import CircularProgress from '@mui/material/CircularProgress';
+import SearchIcon from '@mui/icons-material/Search';
+import Blue from "../assets/Blue.jpg";
 
-import { useEffect, useState } from 'react';
-import {Link} from "react-router-dom";
-
-// eslint-disable-next-line react/prop-types
 const EventCard = ({ event }) => {
   return (
-    <div className="event-card">
-      <h2>{event.EventName}</h2>
-      <p><strong>Type:</strong> {event.EventType}</p>
-      <p><strong>Location:</strong> {event.LocationVenue}</p>
-      <p><strong>Description:</strong> {event.Description}</p>
-      <p><strong>Status:</strong> {event.Status}</p>
-      <p><strong>Price:</strong> ${event.Price}</p>
-      <p><strong>Organizer:</strong> {event.Organizer}</p>
-      <p><strong>Schedule:</strong> {event.Schedule}</p>
-      <p><strong>Start Date and Time:</strong> {new Date(event.StartDateTime).toLocaleString()}</p>
-      <p><strong>Duration:</strong> {event.Duration}</p>
-    </div>
+    <Grid item xs={12} sm={6} md={4}>
+      <Card sx={{ 
+        backgroundColor: "initial", 
+        borderRadius: 3, 
+        boxShadow: 6, 
+        transition: 'transform 0.3s ease-in-out', 
+        '&:hover': { 
+          transform: 'scale(1.05)',
+          boxShadow: 12,
+        },
+      }}>
+        <CardMedia
+          component="img"
+          image={Blue}
+          alt={event.name}
+          sx={{ 
+            height: 220, 
+            objectFit: 'cover', 
+            borderTopLeftRadius: 3, 
+            borderTopRightRadius: 3 
+          }}
+        />
+        <CardContent sx={{ p: 3 }}>
+          <Typography variant="h5" component="div" sx={{ fontWeight: 'bold', color: "text.primary" }}>
+            {event.eventName}
+          </Typography>
+          <Typography color="text.secondary" sx={{ mt: 1 }}>
+            {new Date(event.startDateTime).toLocaleString()}
+            <br />
+            <small>
+              For {event.duration} Days
+            </small>
+          </Typography>
+          <Divider sx={{ my: 2 }}/>
+          <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+            {event.description}
+          </Typography>
+          <Typography variant="body2" sx={{ mt: 1, color: "text.primary" }}>
+            <strong>Location:</strong> {event.locationVenue}
+          </Typography>
+          <Typography variant="body2" sx={{ mt: 1, color: "text.primary" }}>
+            <strong>Status:</strong> {event.status}
+          </Typography>
+          <Typography variant="body2" sx={{ mt: 1, color: "text.primary" }}>
+            <strong>Organizer:</strong> {event.organizer.userName}
+          </Typography>
+        </CardContent>
+        <CardActions sx={{ display: 'flex', justifyContent: 'space-between', p: 2, backgroundColor: "background.default", borderBottomLeftRadius: 3, borderBottomRightRadius: 3 }}>
+          <Link to={`/event/${event.id}`} style={{ textDecoration: 'none' }}>
+            <Button variant="outlined" size="small" sx={{ color: "primary.main", borderColor: "primary.main", textTransform: 'none' }}>View Details</Button>
+          </Link>
+          <Link to="/cartpage" style={{ textDecoration: 'none' }}>
+            <Button variant="contained" size="small" sx={{ backgroundColor: "primary.main", color: "white", textTransform: 'none' }}>Buy Ticket <br /> KES {event.ticketPrice}</Button>
+          </Link>
+        </CardActions>
+      </Card>
+    </Grid>
   );
 };
 
-const EventList = () => {
-  const [events, setEvents] = useState([]);
+const GET_EVENTS_WITH_ORGANIZER = gql`
+  query GetEventsWithOrganizer {
+    eventsWithOgranizers {
+      capacity
+      description
+      duration
+      eventName
+      eventType
+      id
+      locationVenue
+      schedule
+      startDateTime
+      status
+      ticketPrice
+      ticketQuantity
+      organizer {
+        userEmail
+        userId
+        userName
+      }
+    }
+  }
+`;
 
-  useEffect(() => {
-    fetch('/events.json')
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok ' + response.statusText);
-        }
-        return response.json();
-      })
-      .then(data => {
-        console.log('Fetched data:', data); // Log the fetched data
-        setEvents(data);
-      })
-      .catch(error => console.error('Error fetching events:', error));
-  }, []);
+const EventList = () => {
+  const { loading, error, data } = useQuery(GET_EVENTS_WITH_ORGANIZER);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  if (loading) return (
+    <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
+      <CircularProgress />
+    </Box>
+  );
+
+  const filteredEvents = data.eventsWithOgranizers.filter(event =>
+    event.eventName.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
-    <>
-      <style>{`
-        .event-list {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 20px;
-          padding: 20px;
-          justify-content: center;
-          background-color: #CD5C5C;
-        }
-
-        .event-card {
-          background-color: grey;
-          border: 1px solid #ddd;
-          border-radius: 8px;
-          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-          max-width: 300px;
-          padding: 20px;
-          margin: 10px;
-          transition: transform 0.2s;
-        }
-
-        .event-card:hover {
-          transform: translateY(-10px);
-        }
-
-        .event-card h2 {
-          font-size: 1.5em;
-          margin-bottom: 10px;
-        }
-
-        .event-card p {
-          margin: 5px 0;
-        }
-
-        .event-card strong {
-          color: black;
-        }
-      `}</style>
-
-        <Link to="/cartpage">
-            <button style={{ backgroundColor:"blue"}}> 
-              <div className="event-list">
-                {events.map(event => (
-                  <EventCard key={event.Id} event={event} />
-                ))}
-              </div>
-             </button>
-        </Link> 
-
-    </>
+    <Container sx={{ mt: 4 }}>
+      <Typography variant="h4" align="center" sx={{ mb: 4, color: "text.primary" }}>
+        Available Events
+      </Typography>
+      <Box sx={{ display: "flex", justifyContent: "center", mb: 4 }}>
+        <TextField
+          variant="outlined"
+          placeholder="Search Events"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon />
+              </InputAdornment>
+            ),
+          }}
+          sx={{ width: 400, backgroundColor: "initial", borderRadius: 3 }}
+        />
+      </Box>
+      <Grid container spacing={4}>
+        {filteredEvents.length > 0 ? (
+          filteredEvents.map(event => (
+            <EventCard event={event} key={event.id} />
+          ))
+        ) : (
+          <Typography variant="h6" color="text.secondary" align="center" sx={{ mt: 4 }}>
+            No events found.
+          </Typography>
+        )}
+      </Grid>
+    </Container>
   );
 };
 

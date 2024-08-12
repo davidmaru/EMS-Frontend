@@ -2,20 +2,11 @@
     "roles": [
         {
             "id": 1,
-            "roleGroup": "Basic",
-            "permissions": [
-                "attendEvents"
-            ]
+            "roleGroup": "Basic"
         },
         {
             "id": 2,
-            "roleGroup": "Organizer",
-            "permissions": [
-                "attendEvents",
-                "createEvents",
-                "deleteEvents",
-                "veiwAttendees"
-            ]
+            "roleGroup": "Organizer"
         }
     ]
 }
