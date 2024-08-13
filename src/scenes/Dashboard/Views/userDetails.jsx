@@ -3,34 +3,29 @@ import { Button, Container, Typography, Paper, Stack, CircularProgress } from '@
 import EventList from "../components/eventList";
 import { UserDetail } from "../components/userDetail";
 import "../scss/eventDetails.scss";
-import { useLocation } from "react-router-dom";
-import { useEvents, useEventStatuses, useEventTypes } from "../../../hooks/useUserQuery";
+import { useParams } from "react-router-dom";
+import { useEvents, useEventStatuses, useEventTypes, useRolesQuery, useUserQuery } from "../../../hooks/useUserQuery";
 
 export default function UserDetails() {
     const [organizedMode, setOrganizedMode] = useState(true);
     const { error: statusError, loading: statusLoading, data: statusData } = useEventStatuses()
     const { error: typesError, loading: typesLoading, data: typesData } = useEventTypes()
-    const { error: eventsError, loading: eventsLoading, data: eventsData} = useEvents()
-    let location = useLocation();
+    const { error: eventsError, loading: eventsLoading, data: eventsData } = useEvents()
+    const { error: userError, loading: userLoading, data: userData } = useUserQuery(parseInt(useParams().id))
+    const { error: rolesError, loading: rolesLoading, data: rolesData } = useRolesQuery()
 
-    if (statusError || typesError || eventsError) {
-        return (<><p>Error has occured</p> <p>{statusError.message || typesError.message || eventsData}</p></>)
+    if (statusError || typesError || eventsError || userError || rolesError) {
+        return (<><p>Error has occured</p> <p>{statusError.message || typesError.message || eventsError.message || userError.message || rolesError.message}</p></>)
     }
-    if (statusLoading || typesLoading || eventsLoading) {
+    if (statusLoading || typesLoading || eventsLoading || userLoading || rolesLoading) {
         return <CircularProgress />
     }
 
     const status = statusData.eventStatuses;
     const types = typesData.eventTypes;
     const events = eventsData.events;
-    // console.log("userDetails")
-    const user = location.state.user
-    const roles = location.state.roles;
-    // console.log(location.state.roles)
-    if (!user || !roles) {
-        return (<><p>Error has occured in getting user details</p></>)
-    }
-
+    const user = userData.user
+    const roles = rolesData.roles;
 
     function eventsAttended() {
         const count = 15;

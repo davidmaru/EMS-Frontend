@@ -114,7 +114,7 @@ export default function Panel() {
       >
         <PersonIcon />
       </PanelItem>
-      <PanelItem text="Roles" close={closed}>
+      <PanelItem text="Roles" close={closed} handler={() => navigate("/dashboard/roles")} classes={res.startsWith("/dashboard/roles") ? "active" : ""}>
         <GroupAddIcon />
       </PanelItem>
       <PanelItem text="Tickets" close={closed}>

@@ -137,3 +137,21 @@ export function useGetEvent(id, opts) {
         ...opts
     })
 }
+
+export function useRolesDetails(opts) {
+    const GET_ROLES_DETAILS = gql`query getRolesDetails{
+                     rolesDetails {
+                    id 
+                    permissions
+                    roleGroup
+                }
+            }`
+    return useQuery(GET_ROLES_DETAILS, opts)
+}
+
+export function usePermissions(opts) {
+    const GET_PERMISSIONS = gql`query GetPermissions{
+                 permissions
+            }`
+    return useQuery(GET_PERMISSIONS, opts);
+}

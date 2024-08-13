@@ -1,0 +1,62 @@
+.roles-admin{
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+    padding-inline: 1rem;
+    align-items: flex-start;
+    .roles-details{
+        border: 1px solid black;
+        padding-inline: 1rem;
+        padding-block: .5rem;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        .btns{
+            display: flex;
+            gap: 1rem;
+        }
+        h3{
+            .text{
+                text-decoration: underline;
+            }
+            display: flex;
+            gap: .5rem;
+            // justify-content: center;
+            align-items: center;
+            .icon{
+                cursor: pointer;
+            }
+        }
+        .perms{
+            margin-top: .5rem;
+            display: flex;
+            flex-direction: column;
+            gap: .5rem;
+            li{
+                list-style: none;
+            }
+        }
+    }
+    .roles{
+        border: 1px solid black;
+        position: sticky;
+        // flex-grow: 0;
+        // padding: 1rem .5rem;
+        font-size: 18px;
+        display: flex;
+        flex-direction: column;
+        gap: .5rem;
+        li{
+            border: 1px solid transparent;
+            list-style: none;
+            padding-inline: .5rem;
+            padding-block: .25rem;
+            border-radius: .3rem;
+            &:hover{
+                cursor: pointer;
+                border: 1px solid black;
+            }
+        }
+    }
+}
