@@ -21,7 +21,7 @@ body {
   height: 6em;
   padding: 1.5em;
   will-change: filter;
-  transition: filter 300ms;
+  transition: filter 300ms ease-in-out;
 }
 
 .logo:hover {
@@ -33,10 +33,10 @@ body {
 }
 
 @keyframes logo-spin {
-  from {
+  0% {
     transform: rotate(0deg);
   }
-  to {
+  100% {
     transform: rotate(360deg);
   }
 }
@@ -49,10 +49,15 @@ body {
 
 .card {
   padding: 2em;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: var(--background-light);
 }
 
 .read-the-docs {
   color: #888;
+  font-size: 1rem;
+  line-height: 1.5;
 }
 
 /* Container Styles for Pages */
@@ -61,6 +66,10 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: calc(100vh - 140px); /* Adjust this value based on your header and footer height */
-  margin-top: 80px; /* Adjust this value based on your topbar height */
+  min-height: calc(100vh - 140px); /* Adjust based on header and footer height */
+  margin-top: 80px; /* Adjust based on topbar height */
+  padding: 1rem;
+  box-sizing: border-box;
+  background-color: var(--background);
+  color: var(--text-color);
 }

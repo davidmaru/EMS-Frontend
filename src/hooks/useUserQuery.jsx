@@ -22,8 +22,8 @@ export function useUserQuery(id, opts) {
     if (typeof id !== "number") {
         throw new Error("Id must be a number")
     }
-    const GET_USER_BY_ID = gql
-        `query GetUser($id: Int!){
+    const GET_USER_BY_ID = gql`
+        query GetUser($id: Int!){
         user(id: $id) {
             id
             userEmail
