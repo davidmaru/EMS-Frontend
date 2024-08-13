@@ -6,9 +6,9 @@ import SportsSoccerIcon from "@mui/icons-material/SportsSoccer";
 import ComputerIcon from "@mui/icons-material/Computer";
 import SchoolIcon from "@mui/icons-material/School";
 import HealthAndSafetyIcon from "@mui/icons-material/HealthAndSafety";
-import TheaterComedyIcon from "@mui/icons-material/TheaterComedy"; // New category icon
-import MovieIcon from "@mui/icons-material/Movie"; // New category icon
-import LocalOfferIcon from "@mui/icons-material/LocalOffer"; // New category icon
+import TheaterComedyIcon from "@mui/icons-material/TheaterComedy";
+import MovieIcon from "@mui/icons-material/Movie";
+import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import EventImage1 from "../assets/EventImage1.jpg";
 import EventImage2 from "../assets/EventImage2.jpg";
 import EventImage3 from "../assets/EventImage3.jpg";
@@ -32,8 +32,8 @@ const images = [
   { src: Group, description: "Event 7 Description" },
   { src: Blue, description: "Event 8 Description" },
   { src: WILLIAM, description: "UDA CELEBRATIONS" }
-
 ];
+
 const categories = [
   { name: "Music", icon: <MusicNoteSharpIcon /> },
   { name: "Art", icon: <BrushIcon /> },
@@ -45,6 +45,7 @@ const categories = [
   { name: "Movies", icon: <MovieIcon /> },
   { name: "Deals", icon: <LocalOfferIcon /> },
 ];
+
 const events = [
   { id: 1, name: "Event 1", date: "2024-08-01", description: "Description for Event 1", image: EventImage1 },
   { id: 2, name: "Event 2", date: "2024-08-05", description: "Description for Event 2", image: EventImage2 },
@@ -54,11 +55,7 @@ const events = [
   { id: 6, name: "Event 6", date: "2024-08-20", description: "Description for Event 6", image: Wine },
   { id: 7, name: "Event 7", date: "2024-08-17", description: "Description for Event 7", image: Glasses },
   { id: 8, name: "Event 8", date: "2024-08-17", description: "Description for Event 8", image: Blue },
-  { id: 9, name: "Event 8", date: "2024-08-29", description: " UDA CELEBRATIONS", image: WILLIAM },
-
-
-
-
+  { id: 9, name: "Event 8", date: "2024-08-29", description: "UDA CELEBRATIONS", image: WILLIAM },
 ];
 
 const HomePage = () => {
@@ -108,7 +105,7 @@ const HomePage = () => {
                   {image.description}
                 </Typography>
                 <Link to="/cartpage" style={{ textDecoration: 'none' }}>
-                  <Button variant="contained" color="secondary" size="small">
+                  <Button variant="contained" sx={{ backgroundColor: '#4376A9', color: 'white' }} size="small">
                     Buy Ticket
                   </Button>
                 </Link>
@@ -160,9 +157,10 @@ const HomePage = () => {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    bgcolor: 'grey.main',
+                    bgcolor: '#4376A9',
                     mb: 1,
                     boxShadow: "none",
+                    color: 'white',
                   }}
                 >
                   {category.icon}
@@ -182,7 +180,13 @@ const HomePage = () => {
         <Grid container spacing={3}>
           {events.map((event) => (
             <Grid item xs={12} sm={6} md={4} key={event.id}>
-              <Card sx={{ backgroundColor: "initial" }}>
+              <Card sx={{ backgroundColor: '#D8DDE1',
+                transition: 'transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out',
+                '&:hover': {
+                  transform: 'scale(1.05)',
+                  boxShadow: '0 4px 20px rgba(0, 0, 0, 0.2)',
+                }
+               }}>
                 <CardMedia
                   component="img"
                   image={event.image}
@@ -190,7 +194,7 @@ const HomePage = () => {
                   sx={{ height: 120, objectFit: 'cover' }}
                 />
                 <CardContent>
-                  <Typography variant="h6" component="div">
+                  <Typography variant="h6" component="div" sx={{ color: '#4376A9' }}>
                     {event.name}
                   </Typography>
                   <Typography color="text.secondary">
@@ -202,10 +206,10 @@ const HomePage = () => {
                 </CardContent>
                 <CardActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
                   <Link to={`/event/${event.id}`} style={{ textDecoration: 'none' }}>
-                    <Button size="small" sx={{ color: "text.secondary" }}>View Details</Button>
+                    <Button size="small" sx={{ color: '#4376A9' }}>View Details</Button>
                   </Link>
                   <Link to="/cartpage" style={{ textDecoration: 'none' }}>
-                    <Button size="small" sx={{ color: "text.secondary" }}>Buy Ticket</Button>
+                    <Button size="small" sx={{ color: '#4376A9' }}>Buy Ticket</Button>
                   </Link>
                 </CardActions>
               </Card>

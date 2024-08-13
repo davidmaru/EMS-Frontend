@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+/* eslint-disable react/prop-types */
+import { useState } from 'react';
 import { Link } from "react-router-dom";
 import { useQuery, gql } from '@apollo/client';
 import { Box, Card, CardContent, CardMedia, CardActions, Typography, Container, Grid, Button, Divider, TextField, InputAdornment } from '@mui/material';
@@ -93,7 +94,7 @@ const GET_EVENTS_WITH_ORGANIZER = gql`
 `;
 
 const EventList = () => {
-  const { loading, error, data } = useQuery(GET_EVENTS_WITH_ORGANIZER);
+  const { loading, data } = useQuery(GET_EVENTS_WITH_ORGANIZER);
   const [searchTerm, setSearchTerm] = useState("");
 
   if (loading) return (
@@ -108,7 +109,7 @@ const EventList = () => {
 
   return (
     <Container sx={{ mt: 4 }}>
-      <Typography variant="h4" align="center" sx={{ mb: 4, color: "text.primary" }}>
+      <Typography variant="h4" align="center" sx={{mt: 2, mb: 4, color: "text.primary" }}>
         Available Events
       </Typography>
       <Box sx={{ display: "flex", justifyContent: "center", mb: 4 }}>
