@@ -11,13 +11,17 @@ export default function EditEvent() {
     const {id} = useParams()
     const { error: statusError, loading: statusLoading, data: statusData } = useEventStatuses()
     const { error: typesError, loading: typesLoading, data: typesData } = useEventTypes()
-    const { error: eventsError, loading: eventsLoading, data: eventsData } = useGetEvent(parseInt(id))
+    const { error: eventsError, loading: eventsLoading, data: eventsData, refetch: eventRefetched } = useGetEvent(parseInt(id))
 
     if (statusError || typesError || eventsError) {
         return (<><p>Error has occured</p> <p>{statusError.message || typesError.message || eventsData}</p></>)
     }
     if (statusLoading || typesLoading || eventsLoading) {
         return <CircularProgress />
+    }
+    function raiseFlag()
+    {
+        eventRefetched()
     }
     const status = statusData.eventStatuses;
     const types = typesData.eventTypes;
@@ -29,7 +33,7 @@ export default function EditEvent() {
             <h2>
                 Edit Event Details
             </h2>
-            <EditEventForm event={event} status={status} types={types} />
+            <EditEventForm event={event} status={status} types={types} raiseFlag={raiseFlag}/>
             {/* </div>?
             <div className="btns">
                 <button>Save Changes</button>
