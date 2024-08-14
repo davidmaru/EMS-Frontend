@@ -21,6 +21,7 @@ import WILLIAM from "../assets/WILLIAM.jpg";
 import { Link } from 'react-router-dom';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import { useTheme } from '@emotion/react';
 
 const images = [
   { src: EventImage1, description: "Event 1 Description" },
@@ -59,6 +60,8 @@ const events = [
 ];
 
 const HomePage = () => {
+  const theme = useTheme();
+
   const sliderSettings = {
     dots: true,
     infinite: true,
@@ -180,7 +183,7 @@ const HomePage = () => {
         <Grid container spacing={3}>
           {events.map((event) => (
             <Grid item xs={12} sm={6} md={4} key={event.id}>
-              <Card sx={{ backgroundColor: '#D8DDE1',
+              <Card sx={{ backgroundColor: theme.palette.mode === 'dark' ? '#2C3E50' : '#D8DDE1',
                 transition: 'transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out',
                 '&:hover': {
                   transform: 'scale(1.05)',

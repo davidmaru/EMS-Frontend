@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
 import Search from "./search.jsx";
 import {
@@ -17,15 +19,15 @@ import {
     tableCellClasses,
 } from '@mui/material';
 
-import { styled } from '@mui/system';
+import { styled, useTheme } from '@mui/system';
 import "../scss/eventList.scss";
 import { useNavigate } from "react-router-dom";
-import EditIcon from '@mui/icons-material/Edit';
+//import EditIcon from '@mui/icons-material/Edit';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
-        backgroundColor: theme.palette.primary.main,
-        color: theme.palette.common.white,
+        backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey[900] : theme.palette.primary.main,
+        color: theme.palette.mode === 'dark' ? theme.palette.grey[300] : theme.palette.common.white,
         fontWeight: 'bold',
     },
     [`&.${tableCellClasses.body}`]: {
@@ -47,7 +49,9 @@ export default function EventList({ events = [], types = [], status = [] }) {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [setEditingId] = useState(null); // Track which row is being edited
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const theme = useTheme();
+
 
     useEffect(() => {
         setEventList(events);
