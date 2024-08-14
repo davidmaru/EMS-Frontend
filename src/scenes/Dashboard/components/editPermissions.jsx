@@ -1,48 +1,63 @@
-import { useEffect, useState } from "react"
-import "../scss/editPermissions.scss"
-export default function EditPermissions({ permissions, rolePermissions, handler = () => { } }) {
-    const [selectedPerm, setSelectedPerm] = useState(rolePermissions)
+/* eslint-disable react/prop-types */
+import { useEffect, useState } from "react";
+import { Button, Box, Checkbox, FormControlLabel, Typography } from "@mui/material";
+import "../scss/editPermissions.scss";
+import SaveIcon from '@mui/icons-material/Save';
+import CancelIcon from '@mui/icons-material/Cancel';
+
+export default function EditPermissions({ permissions, rolePermissions }) {
+    const [selectedPerm, setSelectedPerm] = useState(rolePermissions);
+
     useEffect(() => {
         if (rolePermissions) {
-            // console.log(rolePermissions)    
-            setSelectedPerm(rolePermissions)
+            setSelectedPerm(rolePermissions);
         }
-    }, [rolePermissions])
+    }, [rolePermissions]);
+
     function handleChange(perm) {
-        if (selectedPerm.includes(perm)) {
-            setSelectedPerm((prev) => prev.filter((p) => p !== perm))
-        }
-        else {
-            setSelectedPerm((prev) => [...prev, perm]);
-        }
+        setSelectedPerm((prev) =>
+            prev.includes(perm) ? prev.filter((p) => p !== perm) : [...prev, perm]
+        );
     }
-    function handleSave() {
-        handler(selectedPerm)
-    }
+
+    
+
     return (
-        <div className="edit-permissions">
-            <div className="boxes">
+        <Box className="edit-permissions">
+            <Box className="boxes">
                 {permissions.map((perm) => (
-                    <label key={perm}>
-                        <input type="checkbox" name={perm} value={perm}
-                            // defaultChecked={selectedPerm.includes(perm)}
-                            checked={selectedPerm.includes(perm)}
-                            onChange={(_) => handleChange(perm)}
-                        />
-                        <p>
-                            {perm}
-                        </p>
-                    </label>
+                    <FormControlLabel
+                        key={perm}
+                        control={
+                            <Checkbox
+                                checked={selectedPerm.includes(perm)}
+                                onChange={() => handleChange(perm)}
+                                color="primary"
+                            />
+                        }
+                        label={<Typography>{perm}</Typography>}
+                    />
                 ))}
-            </div>
-            <div className="btns" onClick={(_) => handleSave()}>
-                <button>
+            </Box>
+            <Box className="btns" sx={{ mt: 2 }}>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    //onClick={handleSave}
+                    startIcon={<SaveIcon />}
+                    sx={{ mr: 1 }}
+                >
                     Save Changes
-                </button>
-                <button onClick={(_) => setSelectedPerm(rolePermissions)}>
+                </Button>
+                <Button
+                    variant="outlined"
+                    color="secondary"
+                    onClick={() => setSelectedPerm(rolePermissions)}
+                    startIcon={<CancelIcon />}
+                >
                     Discard Changes
-                </button>
-            </div>
-        </div>
-    )
+                </Button>
+            </Box>
+        </Box>
+    );
 }

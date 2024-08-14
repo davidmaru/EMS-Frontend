@@ -4,8 +4,8 @@ import UsersPage from "../scenes/Dashboard/Views/userPage";
 import UserDetails from "../scenes/Dashboard/Views/userDetails";
 import ListEvent from "../scenes/Dashboard/Views/listEvent"
 import EditEvent from "../scenes/Dashboard/Views/editEvent"
-import { useUserQuery } from "../hooks/useUserQuery";
-import { element } from "prop-types";
+// import { useUserQuery } from "../hooks/useUserQuery";
+// import { element } from "prop-types";
 import RolesAdmin from "../scenes/Dashboard/Views/rolesAdmin";
 
 const DashboardRoutes = {

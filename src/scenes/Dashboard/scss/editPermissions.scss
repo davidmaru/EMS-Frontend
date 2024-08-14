@@ -1,13 +1,38 @@
-.edit-permissions{
-    .boxes{
+.edit-permissions {
+    .boxes {
         margin-bottom: 1rem;
         display: flex;
         flex-direction: column;
-        gap: .5rem;
-        label{
+        gap: 1rem;
+        padding: 1rem;
+        border-radius: 8px; // Slightly rounded corners
+        background-color: #f8f9fa; // Very light gray for a subtle background
+        border: 1px solid #e0e0e0; // Subtle border for definition
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1); // Soft shadow for depth
+        transition: background-color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; // Smooth transitions
+
+        &:hover {
+            background-color: #ffffff; // Slightly darker background on hover
+            border-color: #1975D1; // Border color change on hover
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); // Enhanced shadow on hover
+        }
+
+        label {
             display: flex;
-            gap: .5rem;
-            
+            align-items: center;
+            gap: 0.75rem; // Adjusted gap for better alignment
+            font-size: 0.875rem; // Smaller font size for a cleaner look
+            color: #333; // Darker color for better readability
+            transition: color 0.3s ease; // Smooth color transition
+
+            &:hover {
+                color: #4376A9; // Change color on hover for visual feedback
+            }
+        }
+
+        input[type="checkbox"] {
+            accent-color: #4376A9; // Custom accent color for checkboxes
+            transition: accent-color 0.3s ease; // Smooth transition for checkbox color
         }
     }
 }
