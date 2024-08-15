@@ -1,4 +1,6 @@
-import PropTypes from 'prop-types';
+/* eslint-disable react/prop-types */
+//import PropTypes from 'prop-types';
+// eslint-disable-next-line no-unused-vars
 import { TextField, Select, MenuItem, Grid, Box, InputLabel, FormControl, Typography, Button, IconButton, duration } from '@mui/material';
 import { Save as SaveIcon, Cancel as CancelIcon } from '@mui/icons-material';
 import '../scss/editEventForm.scss';
@@ -99,7 +101,7 @@ function EditEventForm({ event = {}, types = [], status = [], raiseFlag = () => 
         <Grid item xs={12} sm={6}>
           <TextField
             fullWidth
-            label="Duration (hours)"
+            label="Duration (Days)"
             type="number"
             variant="outlined"
             inputProps={{ min: 0 }}
@@ -242,6 +244,7 @@ function EditEventForm({ event = {}, types = [], status = [], raiseFlag = () => 
                 color="primary"
                 startIcon={<SaveIcon />}
                 type="submit"
+                // eslint-disable-next-line no-unused-vars
                 onClick={(_) => handleSave()}
                 disabled={updateLoading? true: false}
               >
@@ -256,6 +259,7 @@ function EditEventForm({ event = {}, types = [], status = [], raiseFlag = () => 
                 color="secondary"
                 startIcon={<CancelIcon />}
                 type="button"
+                // eslint-disable-next-line no-unused-vars
                 onClick={(e) => setFormValues(event)}
               >
                 Discard Changes
