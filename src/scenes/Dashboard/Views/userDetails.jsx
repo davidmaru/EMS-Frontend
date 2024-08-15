@@ -11,7 +11,7 @@ export default function UserDetails() {
     const { error: statusError, loading: statusLoading, data: statusData } = useEventStatuses()
     const { error: typesError, loading: typesLoading, data: typesData } = useEventTypes()
     const { error: eventsError, loading: eventsLoading, data: eventsData } = useEvents()
-    const { error: userError, loading: userLoading, data: userData } = useUserQuery(parseInt(useParams().id))
+    const { error: userError, loading: userLoading, data: userData, refetch: userRefetch } = useUserQuery(parseInt(useParams().id))
     const { error: rolesError, loading: rolesLoading, data: rolesData } = useRolesQuery()
 
     if (statusError || typesError || eventsError || userError || rolesError) {
@@ -55,7 +55,7 @@ export default function UserDetails() {
                     User Details
                 </Typography>
                 {/* <UserDetail user={users.users.find(u => u.id == 99935) || user_details} roles={roles.roles} /> */}
-                <UserDetail user={user} roles={roles} />
+                <UserDetail user={user} roles={roles} trigger={() => { userRefetch() }} />
             </Paper>
             <Paper elevation={3} sx={{ p: 3 }}>
                 <Stack direction="row" spacing={2} sx={{ mb: 1 }}>

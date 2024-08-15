@@ -20,7 +20,7 @@ export default function EditDisplay({ defaultValue = "", handler = () => { }, di
         }
         setEditMode(false)
     }
-    const handleSaveClick = (event) => {
+    const handleSaveClick = (_) => {
         // event.stopPropagation(); 
         // if (value == defaultValue) return;
         handler(value)
@@ -28,7 +28,7 @@ export default function EditDisplay({ defaultValue = "", handler = () => { }, di
         // setIsEditing(false);
     };
 
-    const handleEditClick = (event) => {
+    const handleEditClick = (_) => {
         // event.stopPropagation(); // Prevent row click
         setEditMode(true);
     };
