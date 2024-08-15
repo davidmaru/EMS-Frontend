@@ -2,7 +2,7 @@
 import { Box, Typography, TextField, Button, Container, FormControl, Input} from '@mui/material';
 //import { useTheme } from '@mui/material/styles';
 import { useState } from 'react';
-
+import { Link } from 'react-router-dom';
 const AddEventPage = () => {
   //const theme = useTheme();
   //const colors = tokens(theme.palette.mode);
@@ -55,7 +55,7 @@ const AddEventPage = () => {
             )}
           </FormControl>
 
-          <Button variant="contained" color="primary">Add Event</Button>
+          <Button component={Link} to="/OrganizersPage" variant="contained" color="primary">Add Event</Button>
         </Box>
       </Box>
     </Container>

@@ -1,0 +1,96 @@
+// calendar.scss
+.react-calendar {
+    // Calendar container styling
+    .calendar-container {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-color: #ffffffac; // Solid white background color for contrast
+      border-radius: 12px; // Smooth rounded corners
+      border: 1px solid #ddd;
+      box-shadow: 0 4px 12px rgba(212, 202, 202, 0.2); // Slightly larger shadow for depth
+      padding: 20px; // Consistent padding
+  
+      .react-calendar {
+        border: none;
+        width: 100%;
+        border-radius: 8px; // Rounded corners for the calendar
+        background-color: #f4f4f46a; // Light background for a clean look
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); // Subtle shadow for depth
+  
+        // Weekdays styling
+        .react-calendar__month-view__days__day {
+          border-radius: 0;
+          font-weight: normal;
+          color: #333; // Dark text for readability
+          font-size: 14px; // Consistent font size
+        }
+  
+        // Tiles styling
+        .react-calendar__tile {
+          padding: 10px;
+          border-radius: 6px; // Slightly rounded corners
+          font-size: 14px;
+          color: #333;
+          transition: background-color 0.3s, color 0.3s; // Smooth transitions
+          background-color: #fff; // Default tile background
+  
+          &:hover {
+            background-color: #e0e0e0; // Subtle hover effect
+            cursor: pointer;
+          }
+        }
+  
+        // Today's date styling
+        .react-calendar__tile--active {
+          background-color: #1975D1; // Main theme color
+          color: #ffffff; // White text for contrast
+          &:hover {
+            background-color: #155a8a; // Darker shade on hover
+          }
+        }
+  
+        // Selected date styling
+        .react-calendar__tile--hasActive {
+          background-color: #e3f2fd; // Light blue background for selected dates
+          border-radius: 6px; // Rounded corners
+        }
+  
+        // Month navigation
+        .react-calendar__navigation button {
+          color: #1975D1; // Main theme color
+          &:hover {
+            color: #155a8a; // Darker shade on hover
+          }
+        }
+  
+        // Navigation label styling
+        .react-calendar__navigation__label {
+          color: #1975D1; // Main theme color
+          font-weight: bold; // Bold for emphasis
+        }
+      }
+  
+      // Selected date label styling
+      .selected-date {
+        margin-top: 20px;
+        font-size: 1rem;
+        color: #333;
+        text-align: center;
+  
+        span {
+          font-weight: bold;
+          color: #1975D1; // Main theme color
+        }
+      }
+  
+      // Highlighted date styling (if needed)
+      .highlighted {
+        background-color: #e0e0e0; // Light gray background for highlighted dates
+        border-radius: 6px; // Rounded corners
+      }
+    }
+  }
+  

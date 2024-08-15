@@ -3,6 +3,7 @@
 // import status from "../data/eventStatus.json"
 import EditEventForm from "../components/editEventForm"
 import "../scss/editEvent.scss"
+// eslint-disable-next-line no-unused-vars
 import { useEvents, useEventStatuses, useEventTypes, useGetEvent } from "../../../hooks/useUserQuery"
 import { CircularProgress } from "@mui/material"
 import { useParams } from "react-router-dom"
