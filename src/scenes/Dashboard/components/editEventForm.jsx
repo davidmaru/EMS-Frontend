@@ -1,14 +1,53 @@
-import PropTypes from 'prop-types';
-import { TextField, Select, MenuItem, Grid, Box, InputLabel, FormControl, Typography, Button, IconButton } from '@mui/material';
+/* eslint-disable react/prop-types */
+//import PropTypes from 'prop-types';
+// eslint-disable-next-line no-unused-vars
+import { TextField, Select, MenuItem, Grid, Box, InputLabel, FormControl, Typography, Button, IconButton, duration } from '@mui/material';
 import { Save as SaveIcon, Cancel as CancelIcon } from '@mui/icons-material';
 import '../scss/editEventForm.scss';
 import { useTheme } from '../UseTheme';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
+import { useEffect, useState } from 'react';
+import { useUpdateEvent } from '../../../hooks/useMutations';
 
 
-function EditEventForm({ event = {}, types = [], status = [] }) {
+function EditEventForm({ event = {}, types = [], status = [], raiseFlag = () => { } }) {
   const { mode, toggleMode } = useTheme();
+  const [updateEvent, { data: updateData, loading: updateLoading, error: updateError }] = useUpdateEvent()
+
+  useEffect(() => {
+    if (event) {
+      setFormValues(event)
+    }
+  }, [event])
+  const [formValues, setFormValues] = useState({
+    id: parseInt(event.id),
+    capacity: event.capacity,
+    description: event.description,
+    duration: event.duration,
+    eventName: event.eventName,
+    eventType: event.eventType,
+    locationVenue: event.locationVenue,
+    schedule: event.schedule,
+    startDateTime: event.startDateTime,
+    status: event.status,
+    ticketPrice: event.ticketPrice,
+    ticketQuantity: event.ticketQuantity
+  })
+  useEffect(() => {
+    if (updateData && updateData.updateEvent) {
+      if (updateData.updateEvent == true) {
+        raiseFlag()
+      }
+    }
+  }, [updateData])
+  function handleChanges(value, key) {
+    setFormValues((prev) => ({ ...prev, [key]: value }))
+  }
+
+  function handleSave() {
+    updateEvent({ variables: { ...formValues } })
+  }
 
   const convertToDateTimeLocalString = (date) => {
     const year = date.getFullYear();
@@ -40,7 +79,8 @@ function EditEventForm({ event = {}, types = [], status = [] }) {
             fullWidth
             label="Event Name"
             variant="outlined"
-            defaultValue={event.name || ''}
+            value={formValues.eventName}
+            onChange={(e) => handleChanges(e.target.value, "eventName")}
           />
         </Grid>
 
@@ -52,7 +92,8 @@ function EditEventForm({ event = {}, types = [], status = [] }) {
             type="datetime-local"
             variant="outlined"
             InputLabelProps={{ shrink: true }}
-            defaultValue={convertToDateTimeLocalString(new Date(event.startDateTime))}
+            value={convertToDateTimeLocalString(new Date(formValues.startDateTime))}
+            onChange={(e) => handleChanges(e.target.value, "startDateTime")}
           />
         </Grid>
 
@@ -60,10 +101,12 @@ function EditEventForm({ event = {}, types = [], status = [] }) {
         <Grid item xs={12} sm={6}>
           <TextField
             fullWidth
-            label="Duration (hours)"
+            label="Duration (Days)"
             type="number"
             variant="outlined"
-            defaultValue={event.duration || ''}
+            inputProps={{ min: 0 }}
+            value={formValues.duration}
+            onChange={(e) => handleChanges(parseInt(e.target.value), "duration")}
           />
         </Grid>
 
@@ -73,10 +116,11 @@ function EditEventForm({ event = {}, types = [], status = [] }) {
             fullWidth
             label="Price (KES)"
             type="number"
-            step={100}
-            inputProps={{ min: 0 }}
+            // step={.01}
+            inputProps={{ min: 0, step: "0.01" }}
             variant="outlined"
-            defaultValue={event.price || ''}
+            value={formValues.ticketPrice}
+            onChange={(e) => handleChanges(parseFloat(e.target.value), "ticketPrice")}
           />
         </Grid>
 
@@ -87,7 +131,9 @@ function EditEventForm({ event = {}, types = [], status = [] }) {
             label="Capacity"
             type="number"
             variant="outlined"
-            defaultValue={event.capacity || ''}
+            value={formValues.capacity}
+            inputProps={{ min: 0 }}
+            onChange={(e) => handleChanges(parseInt(e.target.value), "capacity")}
           />
         </Grid>
 
@@ -97,7 +143,8 @@ function EditEventForm({ event = {}, types = [], status = [] }) {
             fullWidth
             label="Location Venue"
             variant="outlined"
-            defaultValue={event.locationVenue || ''}
+            value={formValues.locationVenue}
+            onChange={(e) => handleChanges(e.target.value, "locationVenue")}
           />
         </Grid>
 
@@ -108,7 +155,9 @@ function EditEventForm({ event = {}, types = [], status = [] }) {
             label="Ticket Quantity"
             type="number"
             variant="outlined"
-            defaultValue={event.ticketQuantity || ''}
+            inputProps={{ min: 0 }}
+            value={formValues.ticketQuantity}
+            onChange={(e) => handleChanges(parseInt(e.target.value), "ticketQuantity")}
           />
         </Grid>
 
@@ -118,7 +167,8 @@ function EditEventForm({ event = {}, types = [], status = [] }) {
             fullWidth
             label="Organizer ID"
             variant="outlined"
-            defaultValue={event.organizerId || ''}
+            value={event.organizerId}
+          // onChange={(e) => handleChanges(e, "organizerId")}
           />
         </Grid>
 
@@ -130,7 +180,8 @@ function EditEventForm({ event = {}, types = [], status = [] }) {
             multiline
             rows={4}
             variant="outlined"
-            defaultValue={event.description || ''}
+            value={formValues.description}
+            onChange={(e) => handleChanges(e.target.value, "description")}
           />
         </Grid>
 
@@ -142,7 +193,8 @@ function EditEventForm({ event = {}, types = [], status = [] }) {
             multiline
             rows={4}
             variant="outlined"
-            defaultValue={event.schedule || ''}
+            value={formValues.schedule}
+            onChange={(e) => handleChanges(e.target.value, "schedule")}
           />
         </Grid>
 
@@ -154,7 +206,8 @@ function EditEventForm({ event = {}, types = [], status = [] }) {
               labelId="event-type-label"
               id="event-type"
               label="Choose Event Type"
-              defaultValue={event.eventType || ''}
+              value={formValues.eventType}
+              onChange={(e) => handleChanges(e.target.value, "eventType")}
             >
               {types.map((type, idx) => (
                 <MenuItem key={idx} value={type}>{type}</MenuItem>
@@ -171,7 +224,8 @@ function EditEventForm({ event = {}, types = [], status = [] }) {
               labelId="event-status-label"
               id="event-status"
               label="Change Event Status"
-              defaultValue={event.eventStatus || ''}
+              value={formValues.status}
+              onChange={(e) => handleChanges(e.target.value, "status")}
             >
               {status.map((statu, idx) => (
                 <MenuItem key={idx} value={statu}>{statu}</MenuItem>
@@ -190,6 +244,9 @@ function EditEventForm({ event = {}, types = [], status = [] }) {
                 color="primary"
                 startIcon={<SaveIcon />}
                 type="submit"
+                // eslint-disable-next-line no-unused-vars
+                onClick={(_) => handleSave()}
+                disabled={updateLoading? true: false}
               >
                 Save Changes
               </Button>
@@ -202,12 +259,24 @@ function EditEventForm({ event = {}, types = [], status = [] }) {
                 color="secondary"
                 startIcon={<CancelIcon />}
                 type="button"
+                // eslint-disable-next-line no-unused-vars
+                onClick={(e) => setFormValues(event)}
               >
                 Discard Changes
               </Button>
             </Grid>
           </Grid>
         </Grid>
+        {updateError && <Grid item xs={12}>
+          <p>Error has occured</p>
+        </Grid>
+        }
+        {updateData && <Grid item xs={12}>
+          {!updateData.updateEvent ? <p>Unable to update</p> : null}
+
+        </Grid>
+        }
+
       </Grid>
     </Box>
   );

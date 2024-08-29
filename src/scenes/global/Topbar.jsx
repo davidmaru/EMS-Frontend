@@ -1,6 +1,6 @@
 import { Box, IconButton, Typography, useTheme, InputBase } from "@mui/material";
 import { useContext } from "react";
-import { ColorModeContext, tokens } from "../../theme";
+import { ColorModeContext } from "../../theme";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import SearchIcon from "@mui/icons-material/Search";
@@ -9,7 +9,6 @@ import RUTO from "../assets/RUTO.jpg";
 
 const Topbar = () => {
   const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
   const colorMode = useContext(ColorModeContext);
 
   return (
@@ -23,18 +22,27 @@ const Topbar = () => {
         top: 0,
         left: 0,
         right: 0,
-        height: '60px',
-        background: theme.palette.mode === "dark"
-          ? 'linear-gradient(90deg, #000435 0%, #001970 100%)'
-          : 'linear-gradient(90deg, #001970 0%, #0033cc 100%)',
-        boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+        height: '70px',
+        background: '#1975D1', // Updated top bar color
+        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
         backdropFilter: 'blur(10px)',
-        zIndex: 1000
+        zIndex: 1000,
+        transition: 'background 0.3s ease',
       }}
     >
-      {/* THEME ICON */}
+      {/* THEME TOGGLE ICON */}
       <Box display="flex" alignItems="center">
-        <IconButton onClick={colorMode.toggleColorMode} sx={{ color: colors.grey[100] }}>
+        <IconButton
+          onClick={colorMode.toggleColorMode}
+          sx={{
+            color: '#ffffff', // Text color for icons
+            transition: 'color 0.3s ease',
+            '&:hover': {
+              backgroundColor: theme.palette.action.hover,
+              transition: 'background-color 0.3s ease',
+            },
+          }}
+        >
           {theme.palette.mode === "dark" ? (
             <DarkModeOutlinedIcon />
           ) : (
@@ -46,12 +54,13 @@ const Topbar = () => {
       {/* PAGE NAME */}
       <Link to="/" style={{ textDecoration: 'none' }}>
         <Typography
-          variant="h6"
-          color={colors.grey[100]}
+          variant="h5"
+          color='#ffffff' // Text color for page name
           sx={{
-            '&:hover': { color: colors.primary[100] },
+            '&:hover': { color: '#ffffff' }, // Text color on hover
             textAlign: 'center',
-            fontWeight: 'bold'
+            fontWeight: 700,
+            transition: 'color 0.3s ease',
           }}
         >
           Festiflow
@@ -59,20 +68,37 @@ const Topbar = () => {
       </Link>
 
       {/* SEARCH BAR */}
-      <Box display="flex" alignItems="center" sx={{ flexGrow: 1, justifyContent: 'center', ml: 2, mr: 2 }}>
+      <Box
+        display="flex"
+        alignItems="center"
+        sx={{ flexGrow: 1, justifyContent: 'center', ml: 4, mr: 4 }}
+      >
         <Box
           display="flex"
           alignItems="center"
-          backgroundColor= "initial"
-          borderRadius="20px"
-          sx={{ p: 1, width: '100%', maxWidth: '400px', boxShadow: 'inset 0 3px 4px rgba(0, 0, 0, 0.9)' }}
+          backgroundColor={theme.palette.background.default}
+          borderRadius="25px"
+          sx={{
+            p: 1,
+            width: '100%',
+            maxWidth: '400px',
+            boxShadow: 'inset 0 3px 4px rgba(0, 0, 0, 0.2)',
+            transition: 'box-shadow 0.3s ease',
+            '&:hover': {
+              boxShadow: 'inset 0 3px 4px rgba(0, 0, 0, 0.3)',
+            },
+          }}
         >
           <InputBase
-            sx={{ ml: 2, flex: 1, color: colors.grey[100] }}
+            sx={{
+              ml: 2,
+              flex: 1,
+              color: theme.palette.text.primary,
+            }}
             placeholder="Search"
             inputProps={{ 'aria-label': 'search' }}
           />
-          <IconButton type="button" sx={{ p: 1, color: colors.grey[100] }}>
+          <IconButton type="button" sx={{ p: 1, color: theme.palette.text.primary }}>
             <SearchIcon />
           </IconButton>
         </Box>
@@ -80,39 +106,73 @@ const Topbar = () => {
 
       {/* BUTTON LINKS */}
       <Box display="flex" alignItems="center">
-        <IconButton component={Link} to="/authpage" sx={{ '&:hover': { color: colors.primary[100] } }}>
-          <Typography color={colors.grey[100]}>Signup</Typography>
+        <IconButton
+          component={Link}
+          to="/authpage"
+          sx={{
+            '&:hover': {
+              color: theme.palette.primary.main,
+              backgroundColor: 'transparent',
+              transition: 'color 0.3s ease',
+            },
+          }}
+        >
+          <Typography color='#ffffff' fontWeight="500">Signup</Typography> {/* Text color for buttons */}
         </IconButton>
-        <IconButton component={Link} to="/OrganizersPage" sx={{ '&:hover': { color: colors.primary[100] }, ml: 2 }}>
-          <Typography color={colors.grey[100]}>Manage Events</Typography>
+        <IconButton
+          component={Link}
+          to="/OrganizersPage"
+          sx={{
+            '&:hover': {
+              color: theme.palette.primary.main,
+              backgroundColor: 'transparent',
+              transition: 'color 0.3s ease',
+            },
+            ml: 3,
+          }}
+        >
+          <Typography color='#ffffff' fontWeight="500">Manage Events</Typography> {/* Text color for buttons */}
         </IconButton>
-        <Link to="/Eventlist">
-          <IconButton sx={{ '&:hover': { color: colors.primary[100] }, ml: 2 }}>
-            <Typography color={colors.grey[100]}>Find Events</Typography>
-          </IconButton>
-          </Link>
+        <IconButton
+          component={Link}
+          to="/Eventlist"
+          sx={{
+            '&:hover': {
+              color: theme.palette.primary.main,
+              backgroundColor: 'transparent',
+              transition: 'color 0.3s ease',
+            },
+            ml: 3,
+          }}
+        >
+          <Typography color='#ffffff' fontWeight="500">Find Events</Typography> {/* Text color for buttons */}
+        </IconButton>
       </Box>
 
       {/* PROFILE ICON */}
-      <Box display="flex" alignItems="center" sx={{ ml: 2 }}>
+      <Box display="flex" alignItems="center" sx={{ ml: 3 }}>
         <IconButton
           component={Link}
           to="/authpage"
           sx={{
             width: 50,
             height: 50,
-            borderRadius: '50%',
-            backgroundColor: 'initial',
-            '& img': {
-              width: '100%',
-              height: '100%',
-              borderRadius: '50%',
-            }
+            borderRadius: '50%', // Ensures a round shape
+            padding: 0,
+            '&:hover': {
+              boxShadow: '0 0 10px rgba(0, 0, 0, 0.3)',
+              transition: 'box-shadow 0.3s ease',
+            },
           }}
         >
           <img
             src={RUTO}
             alt="Profile"
+            style={{
+              width: '100%',
+              height: '100%',
+              borderRadius: '50%',
+            }}
           />
         </IconButton>
       </Box>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import RolesBtnList from "../components/rolesBtnList";
 import UserSearch from "../components/userSearch";
 import UsersList from "../components/usersList";
@@ -8,7 +8,14 @@ import CircularProgress from "@mui/material/CircularProgress";
 
 export default function UsersPage() {
     const [userList, setUserList] = useState([]);
-    const { loading, error, data } = useUsersQuery();
+    const { loading, error, data, refetch } = useUsersQuery();
+
+    useEffect(() => {
+        refetch()
+    }, [])
+    const raiseFlag = () => {
+        refetch();
+    }
     const {
         loading: rolesLoading,
         error: rolesError,
@@ -62,7 +69,7 @@ export default function UsersPage() {
             <hr />
             <RolesBtnList roles={roles.roles} handler={btnHandler} />
             <hr />
-            <UsersList users={userList} roles={roles.roles} />
+            <UsersList users={userList} roles={roles.roles} triggerFlag={raiseFlag} />
         </div>
     );
 }

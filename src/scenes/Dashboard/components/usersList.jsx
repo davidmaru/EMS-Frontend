@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
@@ -14,15 +14,24 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-
+import { useBatchUpdateUser } from "../../../hooks/useMutations.jsx"
 import EditDisplay from './editDisplay';
 import EditDisplayRole from './editDisplayRole';
 import { useNavigate } from 'react-router-dom';
 
-export default function UsersList({ users, roles }) {
+export default function UsersList({ users, roles, triggerFlag = () => { } }) {
   const [changeTracker, setChangeTracker] = useState([]);
   const [discardController, setDiscardController] = useState(false);
+  const [batchUpdate, { data: batchUserData, loading: batchUserLoading, error: batchUserError }] = useBatchUpdateUser()
+
   const navigate = useNavigate();
+  useEffect(() => {
+    if (batchUserData) {
+      // console.log("called\n")
+      triggerFlag()
+      setChangeTracker([])
+    }
+  }, [batchUserData])
 
   const handleChange = (user, key) => {
     return (value) => {
@@ -41,19 +50,13 @@ export default function UsersList({ users, roles }) {
         if (changed) {
           changed = {
             ...changed,
-            role: {
-              id: value,
-              [key]: roles.find((e) => e.id === value).roleGroup,
-            },
+            roleId: value
           };
           newChanges = changeTracker.map((item) => (item.id === user.id ? changed : item));
         } else {
           changed = {
             id: user.id,
-            role: {
-              id: value,
-              [key]: roles.find((e) => e.id === value).roleGroup,
-            },
+            roleId: value
           };
           newChanges = [...changeTracker, changed];
         }
@@ -64,10 +67,13 @@ export default function UsersList({ users, roles }) {
 
   const handleSave = () => {
     // Save changes logic here
+    if (changeTracker && changeTracker.length > 0) {
+      // console.log({ variables: { users: changeTracker } })
+      batchUpdate({ variables: { users: changeTracker } })
+    }
   };
 
   const handleRowClick = (userId, user) => {
-    // event.stopPropagation(); // Prevent row click if inside edit icon
     navigate(`/dashboard/user/${userId}`, { state: { user: user, roles: roles } });
   };
 
@@ -75,90 +81,96 @@ export default function UsersList({ users, roles }) {
     <Box sx={{ padding: 3 }}>
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          <Card>
-            <Box
-              sx={{
-                padding: 2,
-                backgroundColor: 'info.main',
-                color: 'white',
-                borderRadius: 1,
-                boxShadow: 3,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
+          {/* <Card> */}
+          <Box
+            sx={{
+              padding: 2,
+              backgroundColor: 'info.main',
+              color: 'white',
+              borderRadius: 1,
+              boxShadow: 3,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            }}
+          >
+            <Typography variant="h6">Users Table</Typography>
+          </Box>
+          <TableContainer component={Paper} sx={{ marginTop: 2 }}>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Username</TableCell>
+                  <TableCell>Email</TableCell>
+                  <TableCell>Role</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {users.map((user) => (
+                  <TableRow
+                    key={user.id}
+                    sx={{ cursor: 'pointer', '&:hover': { backgroundColor: 'action.hover' } }}
+                  >
+                    <TableCell>
+                      <EditDisplay
+                        defaultValue={user.userName}
+                        handler={handleChange(user, 'userName')}
+                        discardController={discardController}
+                        displayClick={(_) => handleRowClick(user.id, user)}
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <EditDisplay
+                        defaultValue={user.userEmail}
+                        handler={handleChange(user, 'userEmail')}
+                        discardController={discardController}
+                        displayClick={(_) => handleRowClick(user.id, user)}
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <EditDisplayRole
+                        role={user.role}
+                        roles={roles}
+                        handler={handleChange(user, 'roleGroup')}
+                        discardController={discardController}
+                      />
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <Box sx={{ display: 'flex', justifyContent: 'flex-end', padding: 2 }}>
+            <Button
+              variant="contained"
+              color="primary"
+              startIcon={<SaveIcon />}
+              disabled={changeTracker.length === 0 || batchUserLoading}
+              onClick={handleSave}
+              sx={{ marginRight: 1 }}
+            >
+              Save Changes
+            </Button>
+            <Button
+              variant="outlined"
+              color="secondary"
+              startIcon={<DeleteIcon />}
+              disabled={changeTracker.length === 0}
+              onClick={() => {
+                setChangeTracker([]);
+                setDiscardController(!discardController);
               }}
             >
-              <Typography variant="h6">Users Table</Typography>
-            </Box>
-            <TableContainer component={Paper} sx={{ marginTop: 2 }}>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Username</TableCell>
-                    <TableCell>Email</TableCell>
-                    <TableCell>Role</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {users.map((user) => (
-                    <TableRow
-                      key={user.id}
-                      sx={{ cursor: 'pointer', '&:hover': { backgroundColor: 'action.hover' } }}
-                    >
-                      <TableCell>
-                        <EditDisplay
-                          defaultValue={user.userName}
-                          handler={handleChange(user, 'userName')}
-                          discardController={discardController}
-                          displayClick={(_) => handleRowClick(user.id, user)}
-                        />
-                      </TableCell>
-                      <TableCell>
-                        <EditDisplay
-                          defaultValue={user.userEmail}
-                          handler={handleChange(user, 'userEmail')}
-                          discardController={discardController}
-                          displayClick={(_) => handleRowClick(user.id, user)}
-                        />
-                      </TableCell>
-                      <TableCell>
-                        <EditDisplayRole
-                          role={user.role}
-                          roles={roles}
-                          handler={handleChange(user, 'roleGroup')}
-                          discardController={discardController}
-                        />
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
+              Discard Changes
+            </Button>
+          </Box>
+          {batchUserError &&
             <Box sx={{ display: 'flex', justifyContent: 'flex-end', padding: 2 }}>
-              <Button
-                variant="contained"
-                color="primary"
-                startIcon={<SaveIcon />}
-                disabled={changeTracker.length === 0}
-                onClick={handleSave}
-                sx={{ marginRight: 1 }}
-              >
-                Save Changes
-              </Button>
-              <Button
-                variant="outlined"
-                color="secondary"
-                startIcon={<DeleteIcon />}
-                disabled={changeTracker.length === 0}
-                onClick={() => {
-                  setChangeTracker([]);
-                  setDiscardController(!discardController);
-                }}
-              >
-                Discard Changes
-              </Button>
+              {batchUserError.message}
             </Box>
-          </Card>
+          }
+
+          {/* </Card> */}
         </Grid>
       </Grid>
     </Box>

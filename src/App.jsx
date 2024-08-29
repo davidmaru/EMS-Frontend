@@ -5,7 +5,10 @@ import router from './router/index.jsx';
 
 const client = new ApolloClient({
     uri: "http://localhost:5081/graphql/",
-    cache: new InMemoryCache()
+    cache: new InMemoryCache(),
+    headers: {
+        authorization: localStorage.getItem('authToken') ? `Bearer ${localStorage.getItem('authToken')}` : "",
+      },
 });
 
 export default function App() {

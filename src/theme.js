@@ -1,219 +1,73 @@
 import { createContext, useState, useMemo } from "react";
 import { createTheme } from "@mui/material/styles";
 
-// color design tokens export
-export const tokens = (mode) => ({
-  ...(mode === "dark"
-    ? {
-        grey: {
-          100: "#e0e0e0",
-          200: "#c2c2c2",
-          300: "#a3a3a3",
-          400: "#858585",
-          500: "#666666",
-          600: "#525252",
-          700: "#3d3d3d",
-          800: "#292929",
-          900: "#141414",
-        },
-        primary: {
-          100: "#e0f7fa",
-          200: "#b2ebf2",
-          300: "#80deea",
-          400: "#4dd0e1",
-          500: "#26c6da",
-          600: "#00bcd4",
-          700: "#00acc1",
-          800: "#0097a7",
-          900: "#00838f",
-        },
-        secondary: {
-          100: "#f1f8e9",
-          200: "#dce775",
-          300: "#c0ca33",
-          400: "#a4b42b",
-          500: "#9cbe19",
-          600: "#7cb342",
-          700: "#558b2f",
-          800: "#33691e",
-          900: "#1b5e20",
-        },
-        redAccent: {
-          100: "#ffebee",
-          200: "#ffcdd2",
-          300: "#ef9a9a",
-          400: "#e57373",
-          500: "#ef5350",
-          600: "#f44336",
-          700: "#d32f2f",
-          800: "#c62828",
-          900: "#b71c1c",
-        },
-        blueAccent: {
-          100: "#e3f2fd",
-          200: "#bbdefb",
-          300: "#90caf9",
-          400: "#64b5f6",
-          500: "#42a5f5",
-          600: "#2196f3",
-          700: "#1e88e5",
-          800: "#1976d2",
-          900: "#1565c0",
-        },
-        topbar: {
-          background: "#000080", // Dark navy background for dark mode
-          color: "#ffffff", // White text
-        },
-      }
-    : {
-        grey: {
-          100: "#f5f5f5",
-          200: "#e0e0e0",
-          300: "#c2c2c2",
-          400: "#a3a3a3",
-          500: "#666666",
-          600: "#525252",
-          700: "#3d3d3d",
-          800: "#292929",
-          900: "#141414",
-        },
-        primary: {
-          100: "#e3f2fd",
-          200: "#bbdefb",
-          300: "#90caf9",
-          400: "#64b5f6",
-          500: "#42a5f5",
-          600: "#2196f3",
-          700: "#1e88e5",
-          800: "#1976d2",
-          900: "#1565c0",
-        },
-        secondary: {
-          100: "#f1f8e9",
-          200: "#dce775",
-          300: "#c0ca33",
-          400: "#a4b42b",
-          500: "#9cbe19",
-          600: "#7cb342",
-          700: "#558b2f",
-          800: "#33691e",
-          900: "#1b5e20",
-        },
-        redAccent: {
-          100: "#b71c1c",
-          200: "#c62828",
-          300: "#d32f2f",
-          400: "#f44336",
-          500: "#ef5350",
-          600: "#e57373",
-          700: "#ef9a9a",
-          800: "#ffcdd2",
-          900: "#ffebee",
-        },
-        blueAccent: {
-          100: "#1565c0",
-          200: "#1976d2",
-          300: "#1e88e5",
-          400: "#2196f3",
-          500: "#42a5f5",
-          600: "#64b5f6",
-          700: "#90caf9",
-          800: "#bbdefb",
-          900: "#e3f2fd",
-        },
-        topbar: {
-          background: "#000080", // Dark navy background for light mode
-          color: "#ffffff", // White text
-        },
-      }),
+// Define the light and dark themes
+const lightTheme = createTheme({
+  typography: {
+    fontFamily: '"Roboto", sans-serif',
+  },
+  palette: {
+    mode: "light",
+    primary: {
+      main: "#1565C0", // Calmer blue
+    },
+    secondary: {
+      main: "#FF8F00", // Subdued orange
+    },
+    background: {
+      default: "#D7D8D9", // Updated to subtle gray background
+      paper: "#FFFFFF", // Soft white paper background
+    },
+    text: {
+      primary: "#424242", // Medium-dark gray text
+      secondary: "#616161", // Softer gray text
+    },
+    topbar: {
+      background: "#4B9CD3", // Sky Blue background for light mode
+      color: "#FFFFFF", // White text for contrast
+    },
+  },
 });
 
-// mui theme settings
+const darkTheme = createTheme({
+  typography: {
+    fontFamily: '"Roboto", sans-serif',
+  },
+  palette: {
+    mode: "dark",
+    primary: {
+      main: "#64B5F6", // Softer blue
+    },
+    secondary: {
+      main: "#FFA726", // Warm orange
+    },
+    background: {
+      default: "#121212", // Darker background for dark mode
+      paper: "#1E1E1E", // Slightly lighter paper background
+    },
+    text: {
+      primary: "#E0E0E0", // Light gray text
+      secondary: "#BDBDBD", // Softer gray text
+    },
+    topbar: {
+      background: "#1E3A8A", // Dark Blue background for dark mode
+      color: "#F0F0F0", // Light gray text for contrast
+    },
+  },
+});
+
+// Function to get the theme based on the mode
 export const themeSettings = (mode) => {
-  const colors = tokens(mode);
-  return {
-    palette: {
-      mode: mode,
-      ...(mode === "dark"
-        ? {
-            primary: {
-              main: colors.primary[500],
-            },
-            secondary: {
-              main: colors.secondary[500],
-            },
-            neutral: {
-              dark: colors.grey[700],
-              main: colors.grey[500],
-              light: colors.grey[600],
-            },
-            background: {
-              default: colors.blueAccent[900],
-            },
-            topbar: {
-              background: colors.topbar.background,
-              color: colors.topbar.color,
-            },
-          }
-        : {
-            primary: {
-              main: colors.primary[500],
-            },
-            secondary: {
-              main: colors.secondary[500],
-            },
-            neutral: {
-              dark: colors.grey[700],
-              main: colors.grey[500],
-              light: colors.grey[500],
-            },
-            background: {
-              default: colors.blueAccent[900],
-            },
-            topbar: {
-              background: colors.topbar.background,
-              color: colors.topbar.color,
-            },
-          }),
-    },
-    typography: {
-      fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
-      fontSize: 12,
-      h1: {
-        fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
-        fontSize: 40,
-      },
-      h2: {
-        fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
-        fontSize: 32,
-      },
-      h3: {
-        fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
-        fontSize: 24,
-      },
-      h4: {
-        fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
-        fontSize: 20,
-      },
-      h5: {
-        fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
-        fontSize: 16,
-      },
-      h6: {
-        fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
-        fontSize: 14,
-      },
-    },
-  };
+  return mode === "light" ? lightTheme : darkTheme;
 };
 
-// context for color mode
+// Context for color mode
 export const ColorModeContext = createContext({
   toggleColorMode: () => {},
 });
 
 export const useMode = () => {
-  const [mode, setMode] = useState("dark");
+  const [mode, setMode] = useState("light"); // Set light mode as default
 
   const colorMode = useMemo(
     () => ({

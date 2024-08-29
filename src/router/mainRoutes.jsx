@@ -1,5 +1,7 @@
+// eslint-disable-next-line no-unused-vars
 import { elements } from "chart.js";
 import MainApp from "../mainApp";
+// eslint-disable-next-line no-unused-vars
 import { Children } from "react";
 import HomePage from "../scenes/HomePage/HomePage";
 import OrganizersPage from "../scenes/OrganizersPage/OrganizersPage";
@@ -10,6 +12,10 @@ import AddEventPage from "../scenes/OrganizersPage/AddEvent";
 import Admin from "../scenes/Admin/Admin";
 import Eventpage from "../scenes/Eventpage/event";
 import EventList from "../scenes/Eventlist/eventlist";
+import OrganizerDashboard from "../scenes/OrganizersPage/OrganizersPage";
+import EventsPage from "../scenes/OrganizersPage/Events";
+import CalendarPage from "../scenes/OrganizersPage/Calendar";
+import AttendeesPage from "../scenes/OrganizersPage/Attendees";
 
 const MainRoutes = {
     path: "/",
@@ -50,7 +56,24 @@ const MainRoutes = {
         {
             path: "EventList",
             element: <EventList />
-        }
+        },
+        {
+            path: "organizer/:organizerId",
+            element: <OrganizerDashboard />,
+        },
+        {
+            path: "organizer/:id/events",
+            element: <EventsPage/>,
+        },
+        {
+            path: "organizer/:id/calendar",
+            element: <CalendarPage/>,
+        },
+        {
+            path: "organizer/:id/attendees",
+            element: <AttendeesPage/>,
+        },
+          
     ]
 }
 
