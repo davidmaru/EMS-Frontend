@@ -48,15 +48,15 @@ const categories = [
 ];
 
 const events = [
-  { id: 1, name: "Event 1", date: "2024-08-01", description: "Description for Event 1", image: EventImage1 },
-  { id: 2, name: "Event 2", date: "2024-08-05", description: "Description for Event 2", image: EventImage2 },
-  { id: 3, name: "Event 3", date: "2024-08-10", description: "Description for Event 3", image: EventImage3 },
-  { id: 4, name: "Event 4", date: "2024-08-16", description: "Description for Event 4", image: Dining },
-  { id: 5, name: "Event 5", date: "2024-08-30", description: "Description for Event 5", image: Group },
-  { id: 6, name: "Event 6", date: "2024-08-20", description: "Description for Event 6", image: Wine },
-  { id: 7, name: "Event 7", date: "2024-08-17", description: "Description for Event 7", image: Glasses },
-  { id: 8, name: "Event 8", date: "2024-08-17", description: "Description for Event 8", image: Blue },
-  { id: 9, name: "Event 8", date: "2024-08-29", description: "UDA CELEBRATIONS", image: WILLIAM },
+  { id: 1, name: "COMIC-CON", date: "2024-08-01", description: "Description ", image: EventImage1 },
+  { id: 2, name: "SIGMA SIT-DOWN", date: "2024-08-05", description: "Description ", image: EventImage2 },
+  { id: 3, name: "LINK AND CHILL", date: "2024-08-10", description: "Description ", image: EventImage3 },
+  { id: 4, name: "ALBUM LAUNCH PARTY", date: "2024-08-16", description: "Description ", image: Dining },
+  { id: 5, name: "MUSICFEST", date: "2024-08-30", description: "Description ", image: Group },
+  { id: 6, name: "FOOD CRITICS DINE", date: "2024-08-20", description: "Description ", image: Wine },
+  { id: 7, name: "STATE DINNER", date: "2024-08-17", description: "Description", image: Glasses },
+  { id: 8, name: "SUMMER FEST", date: "2024-08-17", description: "Description", image: Blue },
+  { id: 9, name: "UDA ", date: "2024-08-29", description: "UDA CELEBRATIONS", image: WILLIAM },
 ];
 
 const HomePage = () => {

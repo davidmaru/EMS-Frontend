@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Grid, Card, CardContent, Button, IconButton, Typography, Divider, TextField } from '@mui/material';
+import { Box, Grid, Card, CardContent,IconButton, Button, Typography, Divider, TextField, useTheme } from '@mui/material';
 import { Link } from 'react-router-dom';
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -11,7 +11,6 @@ import PropTypes from 'prop-types';
 import { styled } from '@mui/system';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import './calendar.scss';
 
 // Dummy organizer data
 const organizer = {
@@ -32,7 +31,7 @@ const StyledPanel = styled(Box)(({ theme, closed }) => ({
   width: closed ? '60px' : '240px',
   transition: 'width 0.3s',
   height: `calc(100vh - 15px)`,
-  backgroundColor: theme.palette.background.paper,
+  backgroundColor: theme.palette.mode === 'dark' ? '#333' : '#D9DADB',
   boxShadow: theme.shadows[3],
   position: 'fixed',
   top: '70px',
@@ -55,6 +54,7 @@ const StyledPanelItem = styled(Box)(({ theme, closed }) => ({
   padding: '8px 16px',
   transition: 'all 0.3s',
   cursor: 'pointer',
+  backgroundColor: closed ? (theme.palette.mode === 'dark' ? '#444' : '#D9DADB') : 'transparent',
   '&:hover': { backgroundColor: theme.palette.action.hover },
   '.text': {
     opacity: closed ? 0 : 1,
@@ -65,26 +65,64 @@ const StyledPanelItem = styled(Box)(({ theme, closed }) => ({
   },
 }));
 
-const PanelItem = ({ children, text, closed, handler }) => (
-  <StyledPanelItem onClick={handler} closed={closed}>
+const StyledCalendar = styled(Calendar)(({ theme }) => ({
+  '&.react-calendar': {
+    width: '100%',
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: theme.palette.mode === 'dark' ? '#2C3E50' : '#93A8BF',
+    boxShadow: theme.shadows[2],
+    border: `1px solid ${theme.palette.divider}`,
+    padding: '10px',
+  },
+  '& .react-calendar__tile': {
+    backgroundColor: 'transparent',
+    '&:hover': {
+      backgroundColor: theme.palette.action.hover,
+    },
+    '&.highlighted': {
+      backgroundColor: theme.palette.action.selected,
+      color: theme.palette.primary.contrastText,
+    },
+  },
+  '& .react-calendar__navigation button': {
+    color: theme.palette.text.primary,
+    '&:hover': {
+      backgroundColor: theme.palette.action.hover,
+    },
+  },
+  '& .react-calendar__tile--now': {
+    backgroundColor: theme.palette.primary.light,
+    color: theme.palette.primary.contrastText,
+  },
+  '& .react-calendar__tile--active': {
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.primary.contrastText,
+  },
+}));
+
+const PanelItem = ({ children, text, closed, to }) => (
+  <Link to={to} style={{ textDecoration: 'none', color: 'inherit' }}>
+  <StyledPanelItem closed={closed}>
     <span className="icon" style={{ marginRight: '8px' }}>
       {children}
     </span>
     <span className={`text ${closed ? 'close' : 'open'}`}>{text}</span>
   </StyledPanelItem>
+  </Link>
 );
 
 PanelItem.propTypes = {
   children: PropTypes.node.isRequired,
   text: PropTypes.string,
   closed: PropTypes.bool,
-  handler: PropTypes.func,
+  to: PropTypes.string.isRequired,
 };
 
 const OrganizerDashboard = () => {
   const [open, setOpen] = React.useState(false);
   const [filter, setFilter] = React.useState('');
   const [selectedDate, setSelectedDate] = React.useState(new Date());
+  const theme = useTheme(); // Get the current theme
 
   const handleDrawerToggle = () => setOpen(!open);
 
@@ -110,28 +148,28 @@ const OrganizerDashboard = () => {
         <PanelItem
           text="Home"
           closed={!open}
-          handler={() => window.location.href = ""}
+          to="/OrganizersPage"
         >
           <HomeIcon />
         </PanelItem>
         <PanelItem
           text="Events"
           closed={!open}
-          handler={() => window.location.href = `/organizer/${organizer.id}`}
+          to={`/organizer/${organizer.id}`}
         >
           <EventIcon />
         </PanelItem>
         <PanelItem
           text="Attendees"
           closed={!open}
-          handler={() => window.location.href = `/organizer/${organizer.id}/attendees`}
+          to={`/organizer/${organizer.id}/attendees`}
         >
           <PeopleIcon />
         </PanelItem>
         <PanelItem
           text="Calendar"
           closed={!open}
-          handler={() => window.location.href = `/organizer/${organizer.id}/calendar`}
+          to={`/organizer/${organizer.id}/calendar`}
         >
           <CalendarMonthOutlinedIcon />
         </PanelItem>
@@ -147,7 +185,7 @@ const OrganizerDashboard = () => {
         component="main"
         sx={{
           flexGrow: 1,
-          bgcolor: 'background.default',
+          bgcolor: theme.palette.mode === 'dark' ? '#1E1E1E' : '#D9DADB',
           p: 3,
           marginLeft: open ? '240px' : '60px',
           marginTop: '15px',
@@ -155,25 +193,25 @@ const OrganizerDashboard = () => {
       >
         {/* Content */}
         <Box sx={{ marginTop: 0 }}>
-          <Typography variant="h4" sx={{ marginBottom: '20px', color: '#1975D1' }}>
+          <Typography variant="h4" sx={{ marginBottom: '20px', color: theme.palette.primary.main }}>
             {organizer.name} Dashboard
           </Typography>
 
           {/* Organizer Details */}
-          <Card sx={{ marginBottom: '20px', padding: 3, borderRadius: '12px', boxShadow: 3 }}>
+          <Card sx={{ marginBottom: '20px', padding: 3, borderRadius: '12px', boxShadow: 3, backgroundColor: theme.palette.mode === 'dark' ? '#2C3E50' : '#C4CCD5' }}>
             <CardContent>
-              <Typography variant="h6" sx={{ marginBottom: '10px', color: '#1975D1' }}>Contact Information</Typography>
+              <Typography variant="h6" sx={{ marginBottom: '10px', color: theme.palette.primary.main }}>Contact Information</Typography>
               <Typography variant="body2" sx={{ marginBottom: '5px' }}>{organizer.contact}</Typography>
-              <Typography variant="body2" sx={{ marginTop: '10px', color: '#555' }}>{organizer.bio}</Typography>
+              <Typography variant="body2" sx={{ marginTop: '10px', color: theme.palette.text.secondary }}>{organizer.bio}</Typography>
             </CardContent>
           </Card>
 
           <Grid container spacing={3}>
             {/* Events Section */}
             <Grid item xs={12} md={6}>
-              <Card sx={{ borderRadius: '12px', boxShadow: 3, padding: 3 }}>
+              <Card sx={{ borderRadius: '12px', boxShadow: 3, padding: 3, backgroundColor: theme.palette.mode === 'dark' ? '#2C3E50' : '#C4CCD5' }}>
                 <CardContent>
-                  <Typography variant="h6" sx={{ marginBottom: '10px', color: '#1975D1' }}>Events</Typography>
+                  <Typography variant="h6" sx={{ marginBottom: '10px', color: theme.palette.primary.main }}>Events</Typography>
                   <TextField
                     variant="outlined"
                     placeholder="Search Events"
@@ -183,20 +221,23 @@ const OrganizerDashboard = () => {
                     onChange={handleSearchChange}
                   />
                   {filteredEvents.map((event) => (
-                    <Box key={event.id} sx={{ marginBottom: '20px' }}>
-                      <Typography variant="body1" sx={{ fontWeight: 'bold', marginBottom: '5px' }}>{event.name}</Typography>
-                      <Typography variant="body2" sx={{ color: '#555' }}>Date: {event.date}</Typography>
-                      <Typography variant="body2" sx={{ color: '#555' }}>Attendees: {event.attendees}</Typography>
+                    <Box key={event.id} sx={{ marginBottom: '10px' }}>
+                      <Typography variant="body1" sx={{ fontWeight: 'bold', color: theme.palette.text.primary }}>{event.name}</Typography>
+                      <Typography variant="body2" sx={{ color: theme.palette.text.secondary }}>Date: {event.date}</Typography>
+                      <Typography variant="body2" sx={{ color: theme.palette.text.secondary }}>Attendees: {event.attendees}</Typography>
+                      <Divider sx={{ marginY: '10px' }} />
                       <Button
-                        variant="contained"
-                        color="primary"
-                        component={Link}
-                        to={`/organizer/${organizer.id}/event/${event.id}`}
-                        sx={{ marginTop: '10px', textTransform: 'none' }}
-                      >
-                        Manage Event
-                      </Button>
-                      <Divider sx={{ marginTop: '20px' }} />
+                          variant="contained"
+                          color="primary"
+                          sx={{ marginRight: '10px' }}
+                          // component={Link}
+                          // to={`/EditEventPage/${event.id}`}
+                        >
+                          Edit
+                        </Button>
+                        <Button variant="outlined" color="error">
+                          Delete
+                        </Button>
                     </Box>
                   ))}
                 </CardContent>
@@ -205,38 +246,17 @@ const OrganizerDashboard = () => {
 
             {/* Calendar Section */}
             <Grid item xs={12} md={6}>
-              <Card sx={{ borderRadius: '12px', boxShadow: 3, padding: 3 }}>
+              <Card sx={{ borderRadius: '12px', boxShadow: 3, padding: 3, backgroundColor: theme.palette.mode === 'dark' ? '#2C3E50' : '#C4CCD5' }}>
                 <CardContent>
-                  <Typography variant="h6" sx={{ marginBottom: '10px', color: '#1975D1' }}>
-                    Event Calendar
-                  </Typography>
-                  <Box
-                    sx={{
-                      height: '400px',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      backgroundColor: 'initial',
-                      borderRadius: '8px',
-                      border: '1px solid #ddd',
-                      boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-                      padding: '16px',
+                  <Typography variant="h6" sx={{ marginBottom: '10px', color: theme.palette.primary.main }}>Calendar</Typography>
+                  <StyledCalendar
+                    onChange={setSelectedDate}
+                    value={selectedDate}
+                    tileClassName={({ date }) => {
+                      const eventDates = organizer.events.map(e => new Date(e.date).toDateString());
+                      return eventDates.includes(date.toDateString()) ? 'highlighted' : '';
                     }}
-                  >
-                    <Calendar
-                      className="custom-calendar"
-                      onChange={setSelectedDate}
-                      value={selectedDate}
-                      minDetail="month"
-                      maxDetail="month"
-                      showNavigation={true}
-                      tileClassName={({ date, view }) => view === 'month' && date.getDate() % 2 === 0 ? 'highlighted' : null}
-                    />
-                    <Typography variant="body1" sx={{ marginTop: '20px', textAlign: 'center', color: '#333' }}>
-                      Selected Date: <span style={{ fontWeight: 'bold', color: '#1975D1' }}>{selectedDate.toDateString()}</span>
-                    </Typography>
-                  </Box>
+                  />
                 </CardContent>
               </Card>
             </Grid>

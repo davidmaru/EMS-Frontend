@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Box, TextField, Button, Typography, Link, } from '@mui/material';
+import { Box, TextField, Button, Typography, Link } from '@mui/material';
 import { styled } from '@mui/system';
 import { lightBlue } from '@mui/material/colors';
 import Glasses from "./assets/Glasses.jpg";
@@ -8,7 +8,7 @@ import Group from "./assets/Group.jpg";
 import Wine from "./assets/Wine.jpg";
 import WILLIAM from "./assets/WILLIAM.jpg";
 import Blue from "./assets/Blue.jpg";
-import { gql, useMutation } from '@apollo/client';
+import axios from 'axios';
 
 // Styled components
 const GradientBackground = styled('div')({
@@ -37,7 +37,6 @@ const FormContainer = styled(Box)({
   backgroundColor: 'initial',
 });
 
-
 const ImageContainer = styled(Box)({
   display: 'flex',
   alignItems: 'center',
@@ -62,81 +61,71 @@ const AuthPage = () => {
   const [isSignUp, setIsSignUp] = useState(true);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [userInfo, setUserInfo] = useState({
-    userEmail: "",
-    userName: "",
-    password: "",
+    Email: "",
+    UserName: "",
+    Password: "",
     confirmPassword: ""
   });
   const [passwordError, setPasswordError] = useState({
     error: false,
     message: ""
-  })
-
-  const REGISTER_USER = gql`
-  mutation register($userName: String!, $userEmail: String!, $password: String!) {
-  registerUser(userName: $userName, userEmail: $userEmail, password: $password) {
-    error
-    success
-  }
-}`
-  const LOGIN_USER = gql`
-  mutation login($userEmail: String!, $password: String!){
-  loginUser(userEmail: $userEmail, password: $password) {
-    token
-  }
-}`
-  const [registerUser, { data, loading, error }] = useMutation(REGISTER_USER);
-  const [loginUser, { data: loginData, loading: loginLoading, error: loginError }] = useMutation(LOGIN_USER)
+  });
 
   function handleChange(key, value) {
-    setUserInfo({ ...userInfo, [key]: value })
+    setUserInfo({ ...userInfo, [key]: value });
   }
 
   function handleSubmit(e) {
     e.preventDefault();
 
-    if (loading || loginLoading) {
-      return;
-    }
     if (isSignUp) {
-      if (userInfo.password != userInfo.confirmPassword) {
-        setPasswordError({ error: true, message: "Password does not match" })
-        return
+      if (userInfo.Password !== userInfo.confirmPassword) {
+        setPasswordError({ error: true, message: "Passwords do not match" });
+        return;
       }
       setPasswordError({ ...passwordError, error: false });
-      registerUser({
-        variables:
-        {
-          userEmail: userInfo.userEmail,
-          userName: userInfo.userName,
-          password: userInfo.password
+      axios.post('http://localhost:5081/register', {
+        Email: userInfo.Email,
+        UserName: userInfo.UserName,
+        Password: userInfo.Password
+      })
+      .then(response => {
+        if (response.status === 200) {
+          console.log("Registration successful", response.data);
+          // Handle post-registration logic here
+          alert("Registration Successful!")
+          window.location.href = '/login'
+        } else {
+          console.error("Registration failed", response.data);
         }
       })
-    }
-    if (!isSignUp) {
-      loginUser({
-        variables: {
-          userEmail: userInfo.userEmail,
-          password: userInfo.password
+      .catch(error => {
+        console.error("There was an error registering the user!", error);
+      });
+    } else {
+      axios.post('http://localhost:5081/login', {
+        Email: userInfo.Email,
+        Password: userInfo.Password
+      })
+      .then(response => {
+        if (response.status === 200) {
+          const token = response.data.token;
+          console.log('Login successful, token:', token);
+          localStorage.setItem('token', token);
+          // Handle post-login logic here
+           window.location.href = 'http://localhost:5173/'
+        } else {
+          console.error("Login failed", response.data);
         }
       })
+      .catch(error => {
+        console.error("There was an error logging in the user!", error);
+      });
     }
   }
+
   const images = [Glasses, Group, Dining, Wine, Blue, WILLIAM];
-  useEffect(()=>{
-    // console.log(data)
-    if (data && data.registerUser.success){
-      console.log(data.registerUser)
-      //TODO Handle afer register
-    }
-  }, [data]);
-  useEffect(()=>{
-    // console.log(loginData.loginUser.token)
-    if (loginData && loginData.loginUser){
-      // console.log(loginData.loginUser.token)
-      // TODO: handle token
-    }
-  }, [loginData])
+
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
@@ -173,8 +162,8 @@ const AuthPage = () => {
                   autoComplete="name"
                   autoFocus
                   sx={{ mb: 1, width: "60%", boxShadow: 'inset 0 1px 4px rgba(0, 0, 0, 0.2)' }}
-                  value={userInfo.userName}
-                  onChange={(e) => handleChange("userName", e.target.value)}
+                  value={userInfo.UserName}
+                  onChange={(e) => handleChange("UserName", e.target.value)}
                 />
                 <TextField
                   margin="normal"
@@ -185,8 +174,8 @@ const AuthPage = () => {
                   autoComplete="email"
                   autoFocus
                   sx={{ mb: 1, width: "60%", boxShadow: 'inset 0 1px 4px rgba(0, 0, 0, 0.2)' }}
-                  value={userInfo.userEmail}
-                  onChange={(e) => handleChange("userEmail", e.target.value)}
+                  value={userInfo.Email}
+                  onChange={(e) => handleChange("Email", e.target.value)}
                 />
                 <TextField
                   margin="normal"
@@ -199,8 +188,8 @@ const AuthPage = () => {
                   helperText={passwordError.message}
                   autoComplete="current-password"
                   sx={{ mb: 1, width: "60%", boxShadow: 'inset 0 1px 4px rgba(0, 0, 0, 0.2)' }}
-                  value={userInfo.password}
-                  onChange={(e) => handleChange('password', e.target.value)}
+                  value={userInfo.Password}
+                  onChange={(e) => handleChange('Password', e.target.value)}
                 />
                 <TextField
                   margin="normal"
@@ -227,8 +216,8 @@ const AuthPage = () => {
                   autoComplete="email"
                   autoFocus
                   sx={{ mb: 2, width: "60%", boxShadow: 'inset 0 1px 4px rgba(0, 0, 0, 0.2)' }}
-                  value={userInfo.userEmail}
-                  onChange={(e) => handleChange("userEmail", e.target.value)}
+                  value={userInfo.Email}
+                  onChange={(e) => handleChange("Email", e.target.value)}
                 />
                 <TextField
                   margin="normal"
@@ -239,8 +228,8 @@ const AuthPage = () => {
                   id="password"
                   autoComplete="current-password"
                   sx={{ mb: 2, width: "60%", boxShadow: 'inset 0 1px 4px rgba(0, 0, 0, 0.2)' }}
-                  value={userInfo.password}
-                  onChange={(e) => handleChange('password', e.target.value)}
+                  value={userInfo.Password}
+                  onChange={(e) => handleChange('Password', e.target.value)}
                 />
               </>
             )}
@@ -253,7 +242,7 @@ const AuthPage = () => {
               {isSignUp ? 'Sign Up' : 'Login'}
             </Button>
             <Box textAlign="center" sx={{ mt: -0.9 }}>
-              {isSignUp ? "Already have an account? " :"Don't have an account? "}
+              {isSignUp ? "Already have an account? " : "Don't have an account? "}
               <Link
                 href="#"
                 variant="body2"
@@ -262,8 +251,6 @@ const AuthPage = () => {
               >
                 {isSignUp ? 'Login' : "Sign Up"}
               </Link>
-          {error&& <p>Error in Registering user</p>}
-          {loginError && <p>Error in Login user</p>}
             </Box>
           </Box>
         </FormContainer>

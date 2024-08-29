@@ -21,6 +21,7 @@
     "@mui/x-data-grid": "^7.11.1",
     "@mui/x-date-pickers": "^7.11.1",
     "@popperjs/core": "2.11.8",
+    "axios": "^1.7.5",
     "bootstrap": "^5.3.3",
     "chart.js": "^4.4.3",
     "graphql": "^16.9.0",
