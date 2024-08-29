@@ -94,7 +94,7 @@ const AuthPage = () => {
           console.log("Registration successful", response.data);
           // Handle post-registration logic here
           alert("Registration Successful!")
-          window.location.href = '/login'
+          window.location.href = 'http://localhost:5173/authpage#'
         } else {
           console.error("Registration failed", response.data);
         }
