@@ -1,6 +1,16 @@
-import { Box, Card, CardContent, CardMedia, CardActions, Typography, Container, Grid, Button } from '@mui/material';
-import Slider from 'react-slick';
-import MusicNoteSharpIcon from '@mui/icons-material/MusicNoteSharp';
+import {
+  Box,
+  Card,
+  CardContent,
+  CardMedia,
+  CardActions,
+  Typography,
+  Container,
+  Grid,
+  Button,
+} from "@mui/material";
+import Slider from "react-slick";
+import MusicNoteSharpIcon from "@mui/icons-material/MusicNoteSharp";
 import BrushIcon from "@mui/icons-material/Brush";
 import SportsSoccerIcon from "@mui/icons-material/SportsSoccer";
 import ComputerIcon from "@mui/icons-material/Computer";
@@ -18,10 +28,10 @@ import Wine from "../assets/Wine.jpg";
 import Group from "../assets/Group.jpg";
 import Blue from "../assets/Blue.jpg";
 import WILLIAM from "../assets/WILLIAM.jpg";
-import { Link } from 'react-router-dom';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
-import { useTheme } from '@emotion/react';
+import { Link } from "react-router-dom";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { useTheme } from "@emotion/react";
 
 const images = [
   { src: EventImage1, description: "Event 1 Description" },
@@ -32,7 +42,7 @@ const images = [
   { src: Wine, description: "Event 6 Description" },
   { src: Group, description: "Event 7 Description" },
   { src: Blue, description: "Event 8 Description" },
-  { src: WILLIAM, description: "UDA CELEBRATIONS" }
+  { src: WILLIAM, description: "UDA CELEBRATIONS" },
 ];
 
 const categories = [
@@ -48,15 +58,69 @@ const categories = [
 ];
 
 const events = [
-  { id: 1, name: "COMIC-CON", date: "2024-08-01", description: "Description ", image: EventImage1 },
-  { id: 2, name: "SIGMA SIT-DOWN", date: "2024-08-05", description: "Description ", image: EventImage2 },
-  { id: 3, name: "LINK AND CHILL", date: "2024-08-10", description: "Description ", image: EventImage3 },
-  { id: 4, name: "ALBUM LAUNCH PARTY", date: "2024-08-16", description: "Description ", image: Dining },
-  { id: 5, name: "MUSICFEST", date: "2024-08-30", description: "Description ", image: Group },
-  { id: 6, name: "FOOD CRITICS DINE", date: "2024-08-20", description: "Description ", image: Wine },
-  { id: 7, name: "STATE DINNER", date: "2024-08-17", description: "Description", image: Glasses },
-  { id: 8, name: "SUMMER FEST", date: "2024-08-17", description: "Description", image: Blue },
-  { id: 9, name: "UDA ", date: "2024-08-29", description: "UDA CELEBRATIONS", image: WILLIAM },
+  {
+    id: 1,
+    name: "COMIC-CON",
+    date: "2024-08-01",
+    description: "Description ",
+    image: EventImage1,
+  },
+  {
+    id: 2,
+    name: "SIGMA SIT-DOWN",
+    date: "2024-08-05",
+    description: "Description ",
+    image: EventImage2,
+  },
+  {
+    id: 3,
+    name: "LINK AND CHILL",
+    date: "2024-08-10",
+    description: "Description ",
+    image: EventImage3,
+  },
+  {
+    id: 4,
+    name: "ALBUM LAUNCH PARTY",
+    date: "2024-08-16",
+    description: "Description ",
+    image: Dining,
+  },
+  {
+    id: 5,
+    name: "MUSICFEST",
+    date: "2024-08-30",
+    description: "Description ",
+    image: Group,
+  },
+  {
+    id: 6,
+    name: "FOOD CRITICS DINE",
+    date: "2024-08-20",
+    description: "Description ",
+    image: Wine,
+  },
+  {
+    id: 7,
+    name: "STATE DINNER",
+    date: "2024-08-17",
+    description: "Description",
+    image: Glasses,
+  },
+  {
+    id: 8,
+    name: "SUMMER FEST",
+    date: "2024-08-17",
+    description: "Description",
+    image: Blue,
+  },
+  {
+    id: 9,
+    name: "UDA ",
+    date: "2024-08-29",
+    description: "UDA CELEBRATIONS",
+    image: WILLIAM,
+  },
 ];
 
 const HomePage = () => {
@@ -73,42 +137,52 @@ const HomePage = () => {
   };
 
   return (
-    <div style={{ marginTop: '60px' }}>
+    <div style={{ marginTop: "60px" }}>
       <Container>
         <Slider {...sliderSettings}>
           {images.map((image, index) => (
-            <Box key={index} sx={{ position: 'relative', width: '100%', height: '300px' }}>
+            <Box
+              key={index}
+              sx={{ position: "relative", width: "100%", height: "300px" }}
+            >
               <CardMedia
                 component="img"
                 image={image.src}
                 alt={`Image ${index + 1}`}
                 sx={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'cover'
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
                 }}
               />
               <Box
                 sx={{
-                  position: 'absolute',
+                  position: "absolute",
                   bottom: 0,
                   left: 0,
-                  width: '100%',
-                  backgroundColor: 'rgba(0, 0, 0, 0.6)',
-                  color: 'white',
-                  padding: '8px',
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  boxSizing: 'border-box',
-                  height: '80px',
+                  width: "100%",
+                  backgroundColor: "rgba(0, 0, 0, 0.6)",
+                  color: "white",
+                  padding: "8px",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  boxSizing: "border-box",
+                  height: "80px",
                 }}
               >
-                <Typography variant="subtitle2" sx={{ maxWidth: '70%', fontSize: '0.9rem' }}>
+                <Typography
+                  variant="subtitle2"
+                  sx={{ maxWidth: "70%", fontSize: "0.9rem" }}
+                >
                   {image.description}
                 </Typography>
-                <Link to="/cartpage" style={{ textDecoration: 'none' }}>
-                  <Button variant="contained" sx={{ backgroundColor: '#4376A9', color: 'white' }} size="small">
+                <Link to="/cartpage" style={{ textDecoration: "none" }}>
+                  <Button
+                    variant="contained"
+                    sx={{ backgroundColor: "#4376A9", color: "white" }}
+                    size="small"
+                  >
                     Buy Ticket
                   </Button>
                 </Link>
@@ -117,14 +191,14 @@ const HomePage = () => {
           ))}
         </Slider>
 
-        <Typography variant="h4" gutterBottom style={{ marginTop: '20px' }}>
+        <Typography variant="h4" gutterBottom style={{ marginTop: "20px" }}>
           Event Categories
         </Typography>
 
         <Box
           sx={{
-            display: 'flex',
-            overflowX: 'auto',
+            display: "flex",
+            overflowX: "auto",
             gap: 2,
             pb: 2,
             "&::-webkit-scrollbar": {
@@ -140,30 +214,38 @@ const HomePage = () => {
           }}
         >
           {categories.map((category, index) => (
-            <Card key={index} sx={{ minWidth: '120px', padding: '8px', boxSizing: "initial", bgcolor: 'initial' }}>
+            <Card
+              key={index}
+              sx={{
+                minWidth: "120px",
+                padding: "8px",
+                boxSizing: "initial",
+                bgcolor: "initial",
+              }}
+            >
               <Box
                 sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  textAlign: 'center',
-                  height: '100px',
-                  boxShadow: "none"
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  textAlign: "center",
+                  height: "100px",
+                  boxShadow: "none",
                 }}
               >
                 <Box
                   sx={{
-                    width: '50px',
-                    height: '50px',
-                    borderRadius: '50%',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    bgcolor: '#4376A9',
+                    width: "50px",
+                    height: "50px",
+                    borderRadius: "50%",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    bgcolor: "#4376A9",
                     mb: 1,
                     boxShadow: "none",
-                    color: 'white',
+                    color: "white",
                   }}
                 >
                   {category.icon}
@@ -176,43 +258,57 @@ const HomePage = () => {
           ))}
         </Box>
 
-        <Typography variant="h4" gutterBottom style={{ marginTop: '20px' }}>
+        <Typography variant="h4" gutterBottom style={{ marginTop: "20px" }}>
           Upcoming Events
         </Typography>
 
         <Grid container spacing={3}>
           {events.map((event) => (
             <Grid item xs={12} sm={6} md={4} key={event.id}>
-              <Card sx={{ backgroundColor: theme.palette.mode === 'dark' ? '#2C3E50' : '#D8DDE1',
-                transition: 'transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out',
-                '&:hover': {
-                  transform: 'scale(1.05)',
-                  boxShadow: '0 4px 20px rgba(0, 0, 0, 0.2)',
-                }
-               }}>
+              <Card
+                sx={{
+                  backgroundColor:
+                    theme.palette.mode === "dark" ? "#2C3E50" : "#D8DDE1",
+                  transition:
+                    "transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out",
+                  "&:hover": {
+                    transform: "scale(1.05)",
+                    boxShadow: "0 4px 20px rgba(0, 0, 0, 0.2)",
+                  },
+                }}
+              >
                 <CardMedia
                   component="img"
                   image={event.image}
                   alt={event.name}
-                  sx={{ height: 120, objectFit: 'cover' }}
+                  sx={{ height: 120, objectFit: "cover" }}
                 />
                 <CardContent>
-                  <Typography variant="h6" component="div" sx={{ color: '#4376A9' }}>
+                  <Typography
+                    variant="h6"
+                    component="div"
+                    sx={{ color: "#4376A9" }}
+                  >
                     {event.name}
                   </Typography>
-                  <Typography color="text.secondary">
-                    {event.date}
-                  </Typography>
-                  <Typography variant="body2">
-                    {event.description}
-                  </Typography>
+                  <Typography color="text.secondary">{event.date}</Typography>
+                  <Typography variant="body2">{event.description}</Typography>
                 </CardContent>
-                <CardActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <Link to={`/event/${event.id}`} style={{ textDecoration: 'none' }}>
-                    <Button size="small" sx={{ color: '#4376A9' }}>View Details</Button>
+                <CardActions
+                  sx={{ display: "flex", justifyContent: "space-between" }}
+                >
+                  <Link
+                    to={`/event/${event.id}`}
+                    style={{ textDecoration: "none" }}
+                  >
+                    <Button size="small" sx={{ color: "#4376A9" }}>
+                      View Details
+                    </Button>
                   </Link>
-                  <Link to="/cartpage" style={{ textDecoration: 'none' }}>
-                    <Button size="small" sx={{ color: '#4376A9' }}>Buy Ticket</Button>
+                  <Link to="/cartpage" style={{ textDecoration: "none" }}>
+                    <Button size="small" sx={{ color: "#4376A9" }}>
+                      Buy Ticket
+                    </Button>
                   </Link>
                 </CardActions>
               </Card>
