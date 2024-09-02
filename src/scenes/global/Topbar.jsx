@@ -1,16 +1,38 @@
 import { Box, IconButton, Typography, useTheme, InputBase } from "@mui/material";
-import { useContext } from "react";
+import { useContext, useEffect, useState} from "react";
+import { useAuth } from "../AuthContext";
 import { ColorModeContext } from "../../theme";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import SearchIcon from "@mui/icons-material/Search";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import RUTO from "../assets/RUTO.jpg";
 
 const Topbar = () => {
   const theme = useTheme();
   const colorMode = useContext(ColorModeContext);
+  const navigate = useNavigate();
 
+  const { isAuthenticated, login, logout } = useAuth();
+
+   // State to manage the authentication status based on the token
+   const [authStatus, setAuthStatus] = useState(isAuthenticated);
+
+   useEffect(() => {
+    // Check for the token in localStorage
+    const token = localStorage.getItem('authToken');
+    setAuthStatus(!!token); // Set to true if token exists, false otherwise
+  }, [isAuthenticated]);
+
+  const handleAuthClick = () => {
+    if (authStatus) {
+      logout();
+      navigate('/'); // Redirect after logout
+    } else {
+      login('userRole', 'authToken');
+      navigate('/authpage'); // Redirect after login
+    }
+  };
   return (
     <Box
       display="flex"
@@ -106,9 +128,8 @@ const Topbar = () => {
 
       {/* BUTTON LINKS */}
       <Box display="flex" alignItems="center">
-        <IconButton
-          component={Link}
-          to="/authpage"
+      <IconButton
+          onClick={handleAuthClick}
           sx={{
             '&:hover': {
               color: theme.palette.primary.main,
@@ -117,7 +138,9 @@ const Topbar = () => {
             },
           }}
         >
-          <Typography color='#ffffff' fontWeight="500">Signup</Typography> {/* Text color for buttons */}
+          <Typography color='#ffffff' fontWeight="500">
+            {isAuthenticated ? "Logout" : "Login"} {/* Conditional rendering */}
+          </Typography>
         </IconButton>
         <IconButton
           component={Link}

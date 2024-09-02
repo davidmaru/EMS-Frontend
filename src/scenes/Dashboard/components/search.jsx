@@ -2,14 +2,15 @@ import { useEffect, useRef, useState } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import ClearIcon from '@mui/icons-material/Clear';
 import { TextField, IconButton, InputAdornment, Box } from '@mui/material';
+//import useTheme from '../UseTheme';
+import { useTheme } from '@mui/material';
 import PropTypes from 'prop-types'; // Import PropTypes
-import { useTheme } from '../UseTheme';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 export default function Search({ handler = () => {} }) {
     const [value, setValue] = useState("");
     const inputRef = useRef(null);
-    const { mode, toggleMode } = useTheme();
+    const { mode, toggleMode } = useTheme("");
 
 
     function handleIconClick() {

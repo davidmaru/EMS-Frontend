@@ -1,65 +1,68 @@
 // src/App.jsx
-import React, { useState, useEffect } from "react";
-import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+import { useState, useEffect } from 'react';
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import {
-  BrowserRouter as Router,
   Routes,
   Route,
   Navigate,
-} from "react-router-dom";
-import MainApp from "./mainApp";
-import HomePage from "./scenes/HomePage/HomePage";
-import AuthPage from "./scenes/AuthPage";
-import OrganizersPage from "./scenes/OrganizersPage/OrganizersPage";
-import CheckoutPage from "./scenes/CheckoutPage/CheckoutPage";
-import Cart from "./scenes/cartPage/cart";
-import AddEventPage from "./scenes/OrganizersPage/AddEvent";
-import Admin from "./scenes/Admin/Admin";
-import Eventpage from "./scenes/Eventpage/event";
-import EventList from "./scenes/Eventlist/eventlist";
-import OrganizerDashboard from "./scenes/OrganizersPage/OrganizersPage";
-import EventsPage from "./scenes/OrganizersPage/Events";
-import CalendarPage from "./scenes/OrganizersPage/Calendar";
-import AttendeesPage from "./scenes/OrganizersPage/Attendees";
-import Dashboard from "./scenes/Dashboard";
-import UsersPage from "./scenes/Dashboard/Views/userPage";
-import UserDetails from "./scenes/Dashboard/Views/userDetails";
-import ListEvent from "./scenes/Dashboard/Views/listEvent";
-import EditEvent from "./scenes/Dashboard/Views/editEvent";
-import RolesAdmin from "./scenes/Dashboard/Views/rolesAdmin";
+} from 'react-router-dom';
+import MainApp from './mainApp';
+import HomePage from './scenes/HomePage/HomePage';
+import AuthPage from './scenes/AuthPage';
+import OrganizersPage from './scenes/OrganizersPage/OrganizersPage';
+import CheckoutPage from './scenes/CheckoutPage/CheckoutPage';
+import Cart from './scenes/cartPage/cart';
+import AddEventPage from './scenes/OrganizersPage/AddEvent';
+import Admin from './scenes/Admin/Admin';
+import Eventpage from './scenes/Eventpage/event';
+import EventList from './scenes/Eventlist/eventlist';
+import OrganizerDashboard from './scenes/OrganizersPage/OrganizersPage';
+import EventsPage from './scenes/OrganizersPage/Events';
+import CalendarPage from './scenes/OrganizersPage/Calendar';
+import AttendeesPage from './scenes/OrganizersPage/Attendees';
+import Dashboard from './scenes/Dashboard';
+import UsersPage from './scenes/Dashboard/Views/userPage';
+import UserDetails from './scenes/Dashboard/Views/userDetails';
+import ListEvent from './scenes/Dashboard/Views/listEvent';
+import EditEvent from './scenes/Dashboard/Views/editEvent';
+import RolesAdmin from './scenes/Dashboard/Views/rolesAdmin';
+import RoleBasedRoute from './scenes/RoleBasedRoute';
+
 
 const client = new ApolloClient({
-  uri: "https://localhost:5001/graphql/",
+  uri: 'http://localhost:5081/graphql/',
   cache: new InMemoryCache(),
   headers: {
-    authorization: localStorage.getItem("authToken")
-      ? `Bearer ${localStorage.getItem("authToken")}`
-      : "",
+    authorization: localStorage.getItem('authToken')
+      ? `Bearer ${localStorage.getItem('authToken')}`
+      : '',
   },
 });
 
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const INACTIVITY_LIMIT = 15 * 60 * 1000; // 15 minutes
 
+  function logout() {
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('tokenExpiration');
+    localStorage.removeItem('userRole');
+    setIsAuthenticated(false);
+  }
   useEffect(() => {
-    const authToken = localStorage.getItem("authToken");
-    const tokenExpiration = localStorage.getItem("tokenExpiration");
+    const authToken = localStorage.getItem('authToken');
+    const tokenExpiration = localStorage.getItem('tokenExpiration');
     if (authToken && tokenExpiration) {
       const currentTime = new Date().getTime();
       if (currentTime < tokenExpiration) {
         setIsAuthenticated(true);
       } else {
-        localStorage.removeItem("authToken");
-        localStorage.removeItem("tokenExpiration");
-        setIsAuthenticated(false);
-      }
+        logout();
+    }
     }
   }, []);
 
   return (
     <ApolloProvider client={client}>
-      <Router>
         <Routes>
           <Route path="/" element={<MainApp />}>
             <Route index element={<HomePage />} />
@@ -68,112 +71,50 @@ export default function App() {
               element={<AuthPage setIsAuthenticated={setIsAuthenticated} />}
             />
             <Route
-              path="OrganizersPage"
-              element={
-                isAuthenticated ? (
-                  <OrganizersPage />
-                ) : (
-                  <Navigate to="/AuthPage" replace />
-                )
-              }
+              path="/OrganizersPage"
+              element={<RoleBasedRoute element={<OrganizersPage />} isAuthenticated={isAuthenticated} />}
             />
             <Route
-              path="CheckoutPage"
-              element={
-                isAuthenticated ? (
-                  <CheckoutPage />
-                ) : (
-                  <Navigate to="/AuthPage" replace />
-                )
-              }
+              path="/CheckoutPage"
+              element={<RoleBasedRoute element={<CheckoutPage />} isAuthenticated={isAuthenticated} />}
             />
             <Route
-              path="CartPage"
-              element={
-                isAuthenticated ? <Cart /> : <Navigate to="/AuthPage" replace />
-              }
+              path="/CartPage"
+              element={<RoleBasedRoute element={<Cart />} isAuthenticated={isAuthenticated} />}
             />
             <Route
-              path="AddEventPage"
-              element={
-                isAuthenticated ? (
-                  <AddEventPage />
-                ) : (
-                  <Navigate to="/AuthPage" replace />
-                )
-              }
+              path="/AddEventPage"
+              element={<RoleBasedRoute element={<AddEventPage />} isAuthenticated={isAuthenticated} />}
             />
             <Route
-              path="Admin"
-              element={
-                isAuthenticated ? (
-                  <Admin />
-                ) : (
-                  <Navigate to="/AuthPage" replace />
-                )
-              }
+              path="/Admin"
+              element={<RoleBasedRoute element={<Admin />} isAuthenticated={isAuthenticated} />}
             />
             <Route
-              path="EventPage"
-              element={
-                isAuthenticated ? (
-                  <Eventpage />
-                ) : (
-                  <Navigate to="/AuthPage" replace />
-                )
-              }
+              path="/EventPage"
+              element={<RoleBasedRoute element={<Eventpage />} isAuthenticated={isAuthenticated} />}
             />
             <Route
-              path="EventList"
-              element={
-                isAuthenticated ? (
-                  <EventList />
-                ) : (
-                  <Navigate to="/AuthPage" replace />
-                )
-              }
+              path="/EventList"
+              element={<RoleBasedRoute element={<EventList />} isAuthenticated={isAuthenticated} />}
             />
             <Route
-              path="organizer/:organizerId"
-              element={
-                isAuthenticated ? (
-                  <OrganizerDashboard />
-                ) : (
-                  <Navigate to="/AuthPage" replace />
-                )
-              }
+              path="/organizer/:organizerId"
+              element={<RoleBasedRoute element={<OrganizerDashboard />} isAuthenticated={isAuthenticated} />}
             />
             <Route
-              path="organizer/:id/events"
-              element={
-                isAuthenticated ? (
-                  <EventsPage />
-                ) : (
-                  <Navigate to="/AuthPage" replace />
-                )
-              }
+              path="/organizer/:id/events"
+              element={<RoleBasedRoute element={<EventsPage />} isAuthenticated={isAuthenticated} />}
             />
             <Route
-              path="organizer/:id/calendar"
-              element={
-                isAuthenticated ? (
-                  <CalendarPage />
-                ) : (
-                  <Navigate to="/AuthPage" replace />
-                )
-              }
+              path="/organizer/:id/calendar"
+              element={<RoleBasedRoute element={<CalendarPage />} isAuthenticated={isAuthenticated} />}
             />
             <Route
-              path="organizer/:id/attendees"
-              element={
-                isAuthenticated ? (
-                  <AttendeesPage />
-                ) : (
-                  <Navigate to="/AuthPage" replace />
-                )
-              }
+              path="/organizer/:id/attendees"
+              element={<RoleBasedRoute element={<AttendeesPage />} isAuthenticated={isAuthenticated} />}
             />
-            <Route
+              <Route
               path="dashboard"
               element={
                 isAuthenticated ? (
@@ -192,7 +133,6 @@ export default function App() {
             </Route>
           </Route>
         </Routes>
-      </Router>
     </ApolloProvider>
   );
 }

@@ -4,7 +4,7 @@
 import { TextField, Select, MenuItem, Grid, Box, InputLabel, FormControl, Typography, Button, IconButton, duration } from '@mui/material';
 import { Save as SaveIcon, Cancel as CancelIcon } from '@mui/icons-material';
 import '../scss/editEventForm.scss';
-import { useTheme } from '../UseTheme';
+import useTheme from '../UseTheme';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import { useEffect, useState } from 'react';

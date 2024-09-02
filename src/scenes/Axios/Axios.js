@@ -3,7 +3,7 @@ import axios from "axios";
 
 // Create an instance of axios
 const axiosInstance = axios.create({
-  baseURL: "https://localhost:5001", // Update with your server URL
+  baseURL: "http://localhost:5081", // Update with your server URL
 });
 
 // Set up an interceptor to add the token to the Authorization header

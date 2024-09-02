@@ -12,10 +12,19 @@ body {
 .app {
   max-width: 1280px;
   margin: 0 auto; 
-  padding: 2rem; 
+  width: 100%;
+  height: 100%;
+  flex-direction: column; 
   text-align: center;
 }
-
+.content {
+  flex-grow: 1; /* Allow content to expand */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center content vertically */
+  padding: 20px;
+  align-items: center;
+}
 /* Specific Styles */
 .logo {
   height: 6em;
@@ -63,13 +72,95 @@ body {
 /* Container Styles for Pages */
 .page-container {
   display: flex;
+  flex-grow: 1;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   min-height: calc(100vh - 140px); /* Adjust based on header and footer height */
   margin-top: 80px; /* Adjust based on topbar height */
-  padding: 1rem;
+  padding: 20px;
   box-sizing: border-box;
   background-color: var(--background);
   color: var(--text-color);
+}
+.app.no-topbar .content {
+  /* Adjust padding or margins when Topbar is hidden */
+  padding-top: 0;
+  
+  /* Other adjustments as necessary */
+}
+
+.app .content {
+  /* Default padding or margins when Topbar is visible */
+  padding-top: 70px; /* Example: height of the Topbar */
+}
+/* Add these styles to your CSS or SCSS file */
+
+.swal-container {
+  background-color: #ffffff; /* White background for the container */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.swal-header {
+  background-color: #007fff; /* Your primary blue color */
+  color: #ffffff; /* White text */
+  border-bottom: 1px solid #0059b3; /* Slightly darker border */
+}
+
+.swal-title {
+  color: #ffffff; /* White text for the title */
+  font-weight: bold;
+}
+
+.swal-content {
+  color: #333333; /* Dark gray text for content */
+}
+
+.swal-footer {
+  background-color: #f4f4f9; /* Light gray background */
+  border-top: 1px solid #e0e0e0; /* Light gray border */
+}
+
+.swal-confirm-button {
+  background-color: #007fff; /* Primary blue for the button */
+  color: #ffffff; /* White text */
+  border: none;
+  border-radius: 4px;
+}
+
+.swal-confirm-button:hover {
+  background-color: #0059b3; /* Darker blue for hover */
+}
+
+.swal-cancel-button {
+  background-color: #cccccc; /* Gray for the cancel button */
+  color: #333333; /* Dark text */
+  border: none;
+  border-radius: 4px;
+}
+
+.swal-cancel-button:hover {
+  background-color: #aaaaaa; /* Darker gray for hover */
+}
+
+/* Container for the SweetAlert2 popup */
+.swal2-popup {
+  font-family: 'Roboto', sans-serif; /* Ensure font consistency */
+}
+
+/* Success icon */
+.swal2-success .swal2-success-circular-line-left,
+.swal2-success .swal2-success-circular-line-right {
+  stroke: #007fff; /* Primary blue color for the tick */
+}
+
+/* Checkmark */
+.swal2-success .swal2-success-ring {
+  border-color: #007fff; /* Primary blue color for the ring */
+}
+
+/* Success icon border */
+.swal2-success .swal2-success-fix {
+  border-color: #007fff; /* Primary blue color for the border */
 }

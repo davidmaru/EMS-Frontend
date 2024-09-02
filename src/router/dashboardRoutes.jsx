@@ -1,5 +1,3 @@
-// src/router/dashboardRoutes.js
-import React from "react";
 import Dashboard from "../scenes/Dashboard";
 import UsersPage from "../scenes/Dashboard/Views/userPage";
 import UserDetails from "../scenes/Dashboard/Views/userDetails";

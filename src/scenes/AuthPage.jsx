@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Box, TextField, Button, Typography, Link } from "@mui/material";
+import { Box, TextField, Button, Typography, Link,  Select, MenuItem, FormControl, InputLabel } from "@mui/material";
 import { styled } from "@mui/system";
 import axios from "./Axios/Axios";
 import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
@@ -10,6 +10,7 @@ import Wine from "./assets/Wine.jpg";
 import WILLIAM from "./assets/WILLIAM.jpg";
 import Blue from "./assets/Blue.jpg";
 import Swal from "sweetalert2";
+
 // Styled components
 const GradientBackground = styled("div")({
   display: "flex",
@@ -57,6 +58,12 @@ const Image = styled("img")({
   opacity: 0.8,
 });
 
+const roles = [
+  { value: 'organizer', label: 'Organizer' },
+  { value: 'basic', label: 'Basic' },
+];
+
+// eslint-disable-next-line react/prop-types
 const AuthPage = ({ setIsAuthenticated }) => {
   const [isSignUp, setIsSignUp] = useState(false); // Default to login view
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -65,6 +72,7 @@ const AuthPage = ({ setIsAuthenticated }) => {
     UserName: "",
     Password: "",
     confirmPassword: "",
+    Role: "",
   });
   const [passwordError, setPasswordError] = useState({
     error: false,
@@ -76,9 +84,12 @@ const AuthPage = ({ setIsAuthenticated }) => {
   function handleChange(key, value) {
     setUserInfo({ ...userInfo, [key]: value });
   }
+  const [loading, setLoading] = useState(false);
+
 
   function handleSubmit(e) {
     e.preventDefault();
+    setLoading(true); // Start loading
 
     if (isSignUp) {
       // Handle sign up
@@ -92,13 +103,25 @@ const AuthPage = ({ setIsAuthenticated }) => {
           Email: userInfo.Email,
           UserName: userInfo.UserName,
           Password: userInfo.Password,
+          Role: userInfo.Role, // Send role with registration
+
         })
         .then((response) => {
+          setLoading(false); // Stop loading
+
           if (response.status === 200) {
             Swal.fire({
               title: "Success!",
               text: "Registration Successful! Please log in.",
               icon: "success",
+              customClass: {
+                container: 'swal-container',
+                header: 'swal-header',
+                title: 'swal-title',
+                content: 'swal-content',
+                footer: 'swal-footer',
+                confirmButton: 'swal-confirm-button',
+              },
               confirmButtonText: "OK",
             }).then(() => {
               setIsSignUp(false); // Switch to login form after successful registration
@@ -108,6 +131,7 @@ const AuthPage = ({ setIsAuthenticated }) => {
           }
         })
         .catch((error) => {
+          setLoading(false); // Stop loading
           console.error("There was an error registering the user!", error);
         });
     } else {
@@ -118,27 +142,65 @@ const AuthPage = ({ setIsAuthenticated }) => {
           Password: userInfo.Password,
         })
         .then((response) => {
+          setLoading(false); // Stop loading
           if (response.status === 200) {
             const token = response.data.accessToken; // Update to match the backend response
+            const role = response.data.role; // Get role from response
             const expirationTime = new Date().getTime() + 15 * 60 * 1000; // Token expiration set to 15 minutes
             localStorage.setItem("authToken", token);
             localStorage.setItem("tokenExpiration", expirationTime.toString());
+            localStorage.setItem("userRole", role); // Store role in localStorage
             setIsAuthenticated(true);
+
+            const redirectPath = () => { // Default path for normal users
+            if (role === "Admin") {
+              navigate("/Dashboard");
+            } else if (role === "Organizer") {
+              navigate("/OrganizersPage");
+            } else {
+              navigate ("/");
+             }
+            }
 
             Swal.fire({
               title: "Success!",
-              text: "Login Successful! Redirecting to the Dashboard.",
+              text: "Login Successful! Redirecting...",
               icon: "success",
+              customClass: {
+                container: 'swal-container',
+                header: 'swal-header',
+                title: 'swal-title',
+                content: 'swal-content',
+                footer: 'swal-footer',
+                confirmButton: 'swal-confirm-button',
+
+              },
               confirmButtonText: "OK",
             }).then(() => {
-              navigate("/Dashboard"); // Redirect to /Dashboard after login
+              redirectPath(); // Redirect based on role
             });
-          } else {
-            console.error("Login failed", response.data);
-          }
+          } 
         })
         .catch((error) => {
-          console.error("There was an error logging in the user!", error);
+          setLoading(false); // Stop loading on error
+          if (error.response && error.response.status === 400 ) {
+            Swal.fire({
+              title: "Error",
+              text: "Invalid email or password. Please try again.",
+              icon: "error",
+              customClass: {
+                container: 'swal-container',
+                header: 'swal-header',
+                title: 'swal-title',
+                content: 'swal-content',
+                footer: 'swal-footer',
+                confirmButton: 'swal-confirm-button',
+              },
+              confirmButtonText: "OK",
+            });
+          } else {
+            console.error("There was an error logging in the user!", error);
+          }
         });
     }
   }
@@ -239,6 +301,22 @@ const AuthPage = ({ setIsAuthenticated }) => {
                     handleChange("confirmPassword", e.target.value)
                   }
                 />
+                 <FormControl fullWidth sx={{ mb: 2, width: "60%" }}>
+                  <InputLabel id="role-select-label">Role</InputLabel>
+                  <Select
+                    labelId="role-select-label"
+                    id="role-select"
+                    value={userInfo.Role}
+                    onChange={(e) => handleChange("Role", e.target.value)}
+                    label="Role"
+                  >
+                    {roles.map((Role) => (
+                      <MenuItem key={Role.value} value={Role.value}>
+                        {Role.label}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
               </>
             )}
             {!isSignUp && (
@@ -289,8 +367,9 @@ const AuthPage = ({ setIsAuthenticated }) => {
                 "&:hover": { backgroundColor: "#0059b3" },
               }}
               onClick={(e) => handleSubmit(e)}
+              disabled-={loading}//disable button while loading
             >
-              {isSignUp ? "Sign Up" : "Login"}
+              {loading ? "Please wait...": isSignUp ? "Sign Up" : "Login"}
             </Button>
             <Box textAlign="center" sx={{ mt: -0.9 }}>
               {isSignUp ? "Already have an account?" : "Don't have an account?"}

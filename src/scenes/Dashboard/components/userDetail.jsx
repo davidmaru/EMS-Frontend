@@ -1,13 +1,11 @@
-import PropTypes from 'prop-types';
+/* eslint-disable react/prop-types */
 import EditDisplay from "./editDisplay";
 import EditDisplayRole from "./editDisplayRole";
 import {
     Box,
-    Typography,
+    //Typography,
     Paper,
     Divider,
-    //TextField,
-    //MenuItem,
 } from '@mui/material';
 import "../scss/userDetail.scss";
 import { useEffect, useState } from 'react';
@@ -40,9 +38,9 @@ export function UserDetail({ user, roles, trigger = () => { } }) {
     }
     return (
         <Paper className="user-detail-form" sx={{ p: 3, m: 2 }}>
-            <Typography variant="h4" gutterBottom>
+            {/* <Typography variant="h4" gutterBottom>
                 User Details
-            </Typography>
+            </Typography> */}
             <Divider sx={{ mb: 2 }} />
             <Box className="details" sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
                 <EditDisplay defaultValue={user.userName} handler={createHandler("userName")} />
@@ -51,7 +49,7 @@ export function UserDetail({ user, roles, trigger = () => { } }) {
                 <EditDisplayRole role={user.role} roles={roles} handler={createHandler("roleId")} />
                 <button
                     disabled={updateUserLoading}
-                    onClick={(_) => handleSave()}>
+                    onClick={() => handleSave()}>
                     Save changes
                 </button>
             </Box>
@@ -60,12 +58,4 @@ export function UserDetail({ user, roles, trigger = () => { } }) {
     );
 }
 
-// UserDetail.propTypes = {
-//     user: PropTypes.shape({
-//         userName: PropTypes.string.isRequired,
-//         userEmail: PropTypes.string.isRequired,
-//         role: PropTypes.string.isRequired,
-//     }).isRequired,
-//     roles: PropTypes.arrayOf(PropTypes.string).isRequired,
-// };
 

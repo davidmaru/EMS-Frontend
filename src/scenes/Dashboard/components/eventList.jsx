@@ -18,8 +18,9 @@ import {
     TablePagination,
     tableCellClasses,
 } from '@mui/material';
+import { useTheme } from '@mui/material';
 
-import { styled, useTheme } from '@mui/system';
+import { styled } from '@mui/system';
 import "../scss/eventList.scss";
 import { useNavigate } from "react-router-dom";
 //import EditIcon from '@mui/icons-material/Edit';

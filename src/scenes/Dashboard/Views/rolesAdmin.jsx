@@ -6,7 +6,7 @@ import LightModeIcon from '@mui/icons-material/LightMode';
 import { usePermissions, useRolesDetails } from "../../../hooks/useUserQuery";
 import EditDisplay from "../components/editDisplay";
 import EditPermissions from "../components/editPermissions";
-import { useTheme } from '../UseTheme';
+import useTheme from '../UseTheme';
 import "../scss/rolesAdmin.scss";
 
 export default function RolesAdmin() {

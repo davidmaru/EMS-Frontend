@@ -1,5 +1,5 @@
+/* eslint-disable react/prop-types */
 // src/components/ProtectedRoute.jsx
-import React from "react";
 import { Navigate } from "react-router-dom";
 
 const ProtectedRoute = ({ children }) => {
