@@ -2,8 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import ClearIcon from '@mui/icons-material/Clear';
 import { TextField, IconButton, InputAdornment, Box } from '@mui/material';
-//import useTheme from '../UseTheme';
-import { useTheme } from '@mui/material';
+import useTheme from '../UseTheme';
 import PropTypes from 'prop-types'; // Import PropTypes
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';

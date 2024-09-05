@@ -63,3 +63,38 @@ export function useUpdateUser(opts) {
 }`
   return useMutation(UPDATE_USER, { ...opts })
 }
+
+export function useCreateEvent(opts) {
+  const CREATE_EVENT = gql`
+    mutation CreateEvent(
+      $capacity: Int!,
+      $description: String!,
+      $duration: Int!,
+      $eventName: String!,
+      $eventType: EventTypes!,
+      $locationVenue: String!,
+      $schedule: String!,
+      $startDateTime: DateTime!,
+      $status: String!,
+      $ticketPrice: Decimal!,
+      $ticketQuantity: Int!
+    ) {
+      createEvent(
+        event: {
+          capacity: $capacity,
+          description: $description,
+          duration: $duration,
+          eventName: $eventName,
+          eventType: $eventType,
+          locationVenue: $locationVenue,
+          schedule: $schedule,
+          startDateTime: $startDateTime,
+          status: $status,
+          ticketPrice: $ticketPrice,
+          ticketQuantity: $ticketQuantity
+        }
+      )
+    }
+  `;
+  return useMutation(CREATE_EVENT, { ...opts });
+}

@@ -1,6 +1,6 @@
 // src/App.jsx
 import { useState, useEffect } from 'react';
-import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+import { ApolloClient, InMemoryCache, createHttpLink, ApolloProvider } from '@apollo/client';
 import {
   Routes,
   Route,
@@ -27,17 +27,40 @@ import ListEvent from './scenes/Dashboard/Views/listEvent';
 import EditEvent from './scenes/Dashboard/Views/editEvent';
 import RolesAdmin from './scenes/Dashboard/Views/rolesAdmin';
 import RoleBasedRoute from './scenes/RoleBasedRoute';
+import Unauthorized from './scenes/UnAauthorized';
+import { setContext } from '@apollo/client/link/context';
 
 
-const client = new ApolloClient({
+// const client = new ApolloClient({
+//   uri: 'http://localhost:5081/graphql/',
+//   cache: new InMemoryCache(),
+//   headers: {
+//     authorization: localStorage.getItem('authToken')
+//       ? `Bearer ${localStorage.getItem('authToken')}`
+//       : '',
+//   },
+// });
+
+const httpLink = createHttpLink({
   uri: 'http://localhost:5081/graphql/',
-  cache: new InMemoryCache(),
-  headers: {
-    authorization: localStorage.getItem('authToken')
-      ? `Bearer ${localStorage.getItem('authToken')}`
-      : '',
-  },
 });
+
+const authLink = setContext((_, { headers }) => {
+  // get the authentication token from local storage if it exists
+  const token = localStorage.getItem('authToken');
+  console.log(token);
+  // return the headers to the context so httpLink can read them
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : "",
+    }
+  }
+});
+    const client = new ApolloClient({
+      link: authLink.concat(httpLink),
+      cache: new InMemoryCache()
+    });
 
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -72,23 +95,23 @@ export default function App() {
             />
             <Route
               path="/OrganizersPage"
-              element={<RoleBasedRoute element={<OrganizersPage />} isAuthenticated={isAuthenticated} />}
+              element={<RoleBasedRoute element={<OrganizersPage />} isAuthenticated={isAuthenticated} requiredRoles={['Organizer', 'Admin']} />}
             />
             <Route
               path="/CheckoutPage"
-              element={<RoleBasedRoute element={<CheckoutPage />} isAuthenticated={isAuthenticated} />}
+              element={<RoleBasedRoute element={<CheckoutPage />} isAuthenticated={isAuthenticated} requiredRoles={['Organizer', 'Admin', 'Basic']} />}
             />
             <Route
               path="/CartPage"
-              element={<RoleBasedRoute element={<Cart />} isAuthenticated={isAuthenticated} />}
+              element={<RoleBasedRoute element={<Cart />} isAuthenticated={isAuthenticated} requiredRoles={['Organizer', 'Admin', 'Basic']} />}
             />
             <Route
               path="/AddEventPage"
-              element={<RoleBasedRoute element={<AddEventPage />} isAuthenticated={isAuthenticated} />}
+              element={<RoleBasedRoute element={<AddEventPage />} isAuthenticated={isAuthenticated} requiredRoles={['Organizer', 'Admin']} />}
             />
             <Route
               path="/Admin"
-              element={<RoleBasedRoute element={<Admin />} isAuthenticated={isAuthenticated} />}
+              element={<RoleBasedRoute element={<Admin />} isAuthenticated={isAuthenticated} requiredRoles={['Admin']} />}
             />
             <Route
               path="/EventPage"
@@ -100,7 +123,7 @@ export default function App() {
             />
             <Route
               path="/organizer/:organizerId"
-              element={<RoleBasedRoute element={<OrganizerDashboard />} isAuthenticated={isAuthenticated} />}
+              element={<RoleBasedRoute element={<OrganizerDashboard />} isAuthenticated={isAuthenticated} requiredRoles={['Organizer', 'Admin']}/>}
             />
             <Route
               path="/organizer/:id/events"
@@ -131,6 +154,7 @@ export default function App() {
               <Route path="event/:id" element={<EditEvent />} />
               <Route path="roles" element={<RolesAdmin />} />
             </Route>
+            <Route path="/unauthorized" element={<Unauthorized />} />
           </Route>
         </Routes>
     </ApolloProvider>

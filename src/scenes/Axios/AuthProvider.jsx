@@ -1,5 +1,6 @@
+/* eslint-disable react/prop-types */
 // src/components/AuthProvider.jsx
-import React, { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext();
@@ -22,7 +23,7 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     localStorage.removeItem("authToken");
     setIsAuthenticated(false);
-    navigate("/AuthPage"); // Redirect to AuthPage after logout
+    navigate("/");
   };
 
   return (

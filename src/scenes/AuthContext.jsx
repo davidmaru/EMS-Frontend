@@ -38,6 +38,7 @@ export const AuthProvider = ({ children }) => {
     // Clear token from local storage or call logout API
     setIsAuthenticated(false);
     localStorage.removeItem('authToken'); // Example of clearing a token
+    localStorage.removeItem('token');
     localStorage.removeItem('userRole');
     localStorage.removeItem('tokenExpiration');
     setRole(null);

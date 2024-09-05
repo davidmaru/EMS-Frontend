@@ -1,6 +1,6 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 import { Box, Grid, Card, CardContent,IconButton, Button, Typography, Divider, TextField, useTheme } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
 import MenuIcon from '@mui/icons-material/Menu';
 import EventIcon from '@mui/icons-material/Event';
@@ -11,18 +11,8 @@ import PropTypes from 'prop-types';
 import { styled } from '@mui/system';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-
-// Dummy organizer data
-const organizer = {
-  id: 1,
-  name: "State Man",
-  contact: "stateman@example.com",
-  bio: "Bio for State Man",
-  events: [
-    { id: 101, name: "State Dinner", date: "2024-09-01", attendees: 150 },
-    { id: 102, name: "State Rally", date: "2024-10-15", attendees: 200 },
-  ],
-};
+//import axios from 'axios';
+import { fetchOrganizers } from '../Axios/Api';
 
 // Styled components
 const StyledPanel = styled(Box)(({ theme, closed }) => ({
@@ -119,22 +109,42 @@ PanelItem.propTypes = {
 };
 
 const OrganizerDashboard = () => {
-  const [open, setOpen] = React.useState(false);
-  const [filter, setFilter] = React.useState('');
-  const [selectedDate, setSelectedDate] = React.useState(new Date());
+  const [open, setOpen] = useState(false);
+  const [filter, setFilter] = useState('');
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [organizer, setOrganizer] = useState({events: []});
   const theme = useTheme(); // Get the current theme
+ const navigate = useNavigate();
+
+ useEffect(() => {
+  const fetchOrganizerData = async () => {
+    try {
+      const data = await fetchOrganizers('/organizer'); // Adjust the endpoint as needed
+      setOrganizer(data);
+    } catch (error) {
+      console.error('Failed to fetch organizer data', error);
+      setOrganizer({events: []})
+    }
+  };
+
+  fetchOrganizerData();
+}, []);
 
   const handleDrawerToggle = () => setOpen(!open);
 
   const handleAddEvent = () => {
-    window.location.href = `/AddEventPage`;
+    navigate(`/AddEventPage`);
   };
 
   const handleSearchChange = (event) => setFilter(event.target.value);
 
+  if (!organizer) {
+    return <Typography>Loading...</Typography>;
+  }
+
   const filteredEvents = organizer.events.filter(event =>
     event.name.toLowerCase().includes(filter.toLowerCase())
-  );
+  ) || [];
 
   return (
     <Box sx={{ display: 'flex', mt: 0 }}>

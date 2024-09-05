@@ -1,7 +1,7 @@
+/* eslint-disable react/prop-types */
 import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Grid from '@mui/material/Grid';
-import Card from '@mui/material/Card';
 import Button from '@mui/material/Button';
 import SaveIcon from '@mui/icons-material/Save';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -116,7 +116,7 @@ export default function UsersList({ users, roles, triggerFlag = () => { } }) {
                         defaultValue={user.userName}
                         handler={handleChange(user, 'userName')}
                         discardController={discardController}
-                        displayClick={(_) => handleRowClick(user.id, user)}
+                        displayClick={() => handleRowClick(user.id, user)}
                       />
                     </TableCell>
                     <TableCell>
@@ -124,7 +124,7 @@ export default function UsersList({ users, roles, triggerFlag = () => { } }) {
                         defaultValue={user.userEmail}
                         handler={handleChange(user, 'userEmail')}
                         discardController={discardController}
-                        displayClick={(_) => handleRowClick(user.id, user)}
+                        displayClick={() => handleRowClick(user.id, user)}
                       />
                     </TableCell>
                     <TableCell>
